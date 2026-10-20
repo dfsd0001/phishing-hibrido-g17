@@ -1,0 +1,51 @@
+{
+  "version_contrato": "1.2",
+  "id_analisis": "ae8c3dd2-13e7-4b8b-8173-e3f4366644cc",
+  "timestamp_utc": "2026-10-18T23:29:01+00:00",
+  "modelo": {
+    "version": "fusion_v1",
+    "variante": "V1_es",
+    "umbral_phishing": 0.5
+  },
+  "ruta_modelo": "es_v1",
+  "correo": {
+    "sha256": "8af00c1180239b9a9967d1695bebae84bff175c325a9271fef40f9ac95ca01d3",
+    "asunto_defang": "Oferta"
+  },
+  "clasificacion": {
+    "clase": "spam",
+    "riesgo": 5,
+    "nivel_riesgo": "bajo",
+    "probabilidades": {
+      "legitimo": 0.05,
+      "spam": 0.9,
+      "phishing": 0.05
+    }
+  },
+  "ramas": {
+    "texto_distilbert": {
+      "legitimo": 0.05,
+      "spam": 0.9,
+      "phishing": 0.05
+    },
+    "texto_baseline": null,
+    "url": {
+      "max": 0.2,
+      "media": 0.2,
+      "n_urls": 1,
+      "sin_url": false
+    }
+  },
+  "iocs": {
+    "urls": [
+      "www[.]tienda[.]example[.]net/promo"
+    ],
+    "ips": [],
+    "n_urls": 1,
+    "n_ips": 0
+  },
+  "mitre_attack": [],
+  "idioma_detectado": "es",
+  "advertencias": [],
+  "latencia_ms": 6.9
+}
