@@ -1,0 +1,113 @@
+{
+ "rama_url": {
+  "n_pruebas": 60,
+  "actual": {
+   "n_estimators": 334,
+   "learning_rate": 0.05,
+   "max_depth": 6,
+   "subsample": 0.8,
+   "colsample_bytree": 0.8,
+   "min_child_weight": 1.0,
+   "reg_lambda": 1.0
+  },
+  "puntaje_cv_actual": 0.87568,
+  "mejor": {
+   "max_depth": 5,
+   "learning_rate": 0.047196616386832035,
+   "n_estimators": 300,
+   "min_child_weight": 1.0535763308112676,
+   "subsample": 0.878704398352192,
+   "colsample_bytree": 0.8049383840228588,
+   "reg_lambda": 0.3790081323558767
+  },
+  "puntaje_cv_mejor": 0.87831,
+  "importancia": {
+   "min_child_weight": 0.5548,
+   "max_depth": 0.1219,
+   "learning_rate": 0.1057,
+   "colsample_bytree": 0.0896,
+   "n_estimators": 0.0463,
+   "subsample": 0.0452,
+   "reg_lambda": 0.0365
+  },
+  "rango_entre_pruebas": {
+   "min": 0.85872,
+   "median": 0.87431,
+   "max": 0.87831
+  },
+  "comparacion": {
+   "antes_media": 0.87655,
+   "antes_desv": 0.01759,
+   "despues_media": 0.87725,
+   "despues_desv": 0.01917,
+   "mejora_media": 0.00069,
+   "ic95_mejora": [
+    -0.00152,
+    0.0029
+   ],
+   "wilcoxon_p": 0.63867,
+   "adoptar": false
+  },
+  "prueba_final": {
+   "actual": {
+    "auc_roc": 0.883,
+    "auc_pr": 0.7773,
+    "correos": 5736
+   },
+   "optimizada": {
+    "auc_roc": 0.8735,
+    "auc_pr": 0.7724,
+    "correos": 5736
+   }
+  }
+ },
+ "baseline": {
+  "n_pruebas": 27,
+  "muestra": 6000,
+  "actual": {
+   "C": 8.0,
+   "max_features": 100000,
+   "ngram_max": 2,
+   "min_df": 3,
+   "caracteres": true
+  },
+  "puntaje_cv_actual": 0.96938,
+  "mejor": {
+   "C": 39.836422717353734,
+   "max_features": 20518,
+   "ngram_max": 2,
+   "min_df": 5,
+   "caracteres": true
+  },
+  "puntaje_cv_mejor": 0.97049,
+  "importancia": {
+   "C": 0.7452,
+   "caracteres": 0.1887,
+   "max_features": 0.0289,
+   "ngram_max": 0.0233,
+   "min_df": 0.0139
+  },
+  "rango_entre_pruebas": {
+   "min": 0.94703,
+   "median": 0.96793,
+   "max": 0.97049
+  },
+  "comparacion": {
+   "antes_media": 0.96888,
+   "antes_desv": 0.00271,
+   "despues_media": 0.96974,
+   "despues_desv": 0.00347,
+   "mejora_media": 0.00085,
+   "ic95_mejora": [
+    -0.00052,
+    0.00226
+   ],
+   "wilcoxon_p": 0.5625,
+   "adoptar": false
+  }
+ },
+ "decisiones": [
+  "Rama URL: el intervalo de la mejora [-0.00152, 0.0029] incluye el cero o es negativo. Se mantiene la configuración actual {'n_estimators': 334, 'learning_rate': 0.05, 'max_depth': 6, 'subsample': 0.8, 'colsample_bytree': 0.8, 'min_child_weight': 1.0, 'reg_lambda': 1.0}.",
+  "Línea base: el intervalo de la mejora [-0.00052, 0.00226] incluye el cero o es negativo. Se mantiene la configuración actual {'C': 8.0, 'max_features': 100000, 'ngram_max': 2, 'min_df': 3, 'caracteres': True}."
+ ]
+}
