@@ -1,0 +1,66 @@
+{
+  "version_contrato": "1.2",
+  "id_analisis": "cb3587bb-2448-4e02-a19e-19cba50aefb8",
+  "timestamp_utc": "2026-10-18T23:29:01+00:00",
+  "modelo": {
+    "version": "fusion_v1",
+    "variante": "V3",
+    "umbral_phishing": 0.5
+  },
+  "ruta_modelo": "en_v3",
+  "correo": {
+    "sha256": "a0ca0b9b6efe921b6b34b444bc658913443070604b837296326b178eb62b567b",
+    "asunto_defang": "Account suspended"
+  },
+  "clasificacion": {
+    "clase": "phishing",
+    "riesgo": 100,
+    "nivel_riesgo": "critico",
+    "probabilidades": {
+      "legitimo": 1e-06,
+      "spam": 3e-06,
+      "phishing": 0.999996
+    }
+  },
+  "ramas": {
+    "texto_distilbert": {
+      "legitimo": 0.02,
+      "spam": 0.03,
+      "phishing": 0.95
+    },
+    "texto_baseline": {
+      "legitimo": 0.02,
+      "spam": 0.03,
+      "phishing": 0.95
+    },
+    "url": {
+      "max": 1.0,
+      "media": 1.0,
+      "n_urls": 1,
+      "sin_url": false
+    }
+  },
+  "iocs": {
+    "urls": [
+      "hxxps[://]secure-login[.]example[.]com/verify?id=7"
+    ],
+    "ips": [
+      "192[.]0[.]2[.]4"
+    ],
+    "n_urls": 1,
+    "n_ips": 1
+  },
+  "mitre_attack": [
+    {
+      "tecnica": "T1566",
+      "nombre": "Phishing"
+    },
+    {
+      "tecnica": "T1566.002",
+      "nombre": "Spearphishing Link"
+    }
+  ],
+  "idioma_detectado": "en",
+  "advertencias": [],
+  "latencia_ms": 263.6
+}

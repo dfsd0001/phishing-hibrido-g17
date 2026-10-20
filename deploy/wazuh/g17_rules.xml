@@ -1,0 +1,30 @@
+<!-- Reglas de Wazuh para los eventos del detector de phishing, enviados por n8n a POST /events.
+     El decoder JSON nativo de Wazuh aplana los objetos: clasificacion.clase, clasificacion.riesgo, etc. -->
+<group name="g17,phishing_detector,">
+  <rule id="100500" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="g17_evento">^analisis_correo$</field>
+    <description>G17: correo analizado ($(clasificacion.clase), riesgo $(clasificacion.riesgo))</description>
+  </rule>
+  <rule id="100501" level="10">
+    <if_sid>100500</if_sid>
+    <field name="clasificacion.clase">^phishing$</field>
+    <description>G17: phishing detectado (riesgo $(clasificacion.riesgo), alerta IRIS $(iris_alerta_id))</description>
+    <mitre>
+      <id>T1566</id>
+    </mitre>
+  </rule>
+  <rule id="100502" level="12">
+    <if_sid>100501</if_sid>
+    <field name="clasificacion.nivel_riesgo">^critico$</field>
+    <description>G17: phishing de riesgo CRÍTICO (riesgo $(clasificacion.riesgo))</description>
+    <mitre>
+      <id>T1566</id>
+    </mitre>
+  </rule>
+  <rule id="100503" level="5">
+    <if_sid>100500</if_sid>
+    <field name="advertencias">idioma_no_soportado</field>
+    <description>G17: idioma no soportado ($(idioma_detectado)): requiere revisión manual</description>
+  </rule>
+</group>

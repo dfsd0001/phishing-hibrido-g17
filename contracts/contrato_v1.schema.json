@@ -1,0 +1,297 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:uees:miar0545:g17:contrato-analisis-correo:1.2",
+  "title": "Contrato de análisis de correo v1.2 (Grupo 17)",
+  "description": "Salida del detector híbrido. Fuente de verdad entre la API, n8n, DFIR-IRIS y Wazuh. Todo IOC va defangeado. v1.1 agregó idioma_detectado y advertencias (puerta de idioma). v1.2 agrega ruta_modelo (en_v3 | es_v1) y texto_baseline nulo en la ruta española.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version_contrato",
+    "id_analisis",
+    "timestamp_utc",
+    "modelo",
+    "correo",
+    "clasificacion",
+    "ramas",
+    "iocs",
+    "mitre_attack",
+    "latencia_ms",
+    "idioma_detectado",
+    "advertencias",
+    "ruta_modelo"
+  ],
+  "$defs": {
+    "prob": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "tres_probs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "legitimo",
+        "spam",
+        "phishing"
+      ],
+      "properties": {
+        "legitimo": {
+          "$ref": "#/$defs/prob"
+        },
+        "spam": {
+          "$ref": "#/$defs/prob"
+        },
+        "phishing": {
+          "$ref": "#/$defs/prob"
+        }
+      }
+    },
+    "sin_ioc_vivo": {
+      "type": "string",
+      "not": {
+        "pattern": "(?i)(https?|ftp)://"
+      }
+    }
+  },
+  "properties": {
+    "version_contrato": {
+      "const": "1.2"
+    },
+    "id_analisis": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modelo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "variante",
+        "umbral_phishing"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "variante": {
+          "enum": [
+            "V0",
+            "V1",
+            "V2",
+            "V3",
+            "V1_es",
+            "V2_es"
+          ]
+        },
+        "umbral_phishing": {
+          "$ref": "#/$defs/prob"
+        }
+      }
+    },
+    "correo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "asunto_defang"
+      ],
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "asunto_defang": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sin_ioc_vivo"
+            },
+            {
+              "maxLength": 300
+            }
+          ]
+        }
+      }
+    },
+    "clasificacion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clase",
+        "riesgo",
+        "nivel_riesgo",
+        "probabilidades"
+      ],
+      "properties": {
+        "clase": {
+          "enum": [
+            "legitimo",
+            "spam",
+            "phishing"
+          ]
+        },
+        "riesgo": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "nivel_riesgo": {
+          "enum": [
+            "bajo",
+            "medio",
+            "alto",
+            "critico"
+          ]
+        },
+        "probabilidades": {
+          "$ref": "#/$defs/tres_probs"
+        }
+      }
+    },
+    "ramas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "texto_distilbert",
+        "texto_baseline",
+        "url"
+      ],
+      "properties": {
+        "texto_distilbert": {
+          "$ref": "#/$defs/tres_probs"
+        },
+        "texto_baseline": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/tres_probs"
+            }
+          ]
+        },
+        "url": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max",
+            "media",
+            "n_urls",
+            "sin_url"
+          ],
+          "properties": {
+            "max": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/$defs/prob"
+                }
+              ]
+            },
+            "media": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/$defs/prob"
+                }
+              ]
+            },
+            "n_urls": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 20
+            },
+            "sin_url": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "iocs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "urls",
+        "ips",
+        "n_urls",
+        "n_ips"
+      ],
+      "properties": {
+        "urls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sin_ioc_vivo"
+          }
+        },
+        "ips": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\d{1,3}\\[\\.\\]\\d{1,3}\\[\\.\\]\\d{1,3}\\[\\.\\]\\d{1,3}$"
+          }
+        },
+        "n_urls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_ips": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "mitre_attack": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tecnica",
+          "nombre"
+        ],
+        "properties": {
+          "tecnica": {
+            "enum": [
+              "T1566",
+              "T1566.002"
+            ]
+          },
+          "nombre": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "latencia_ms": {
+      "type": "number",
+      "minimum": 0
+    },
+    "idioma_detectado": {
+      "type": "string",
+      "pattern": "^([a-z]{2}(-[a-z]{2})?|indeterminado)$"
+    },
+    "advertencias": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "idioma_no_soportado"
+        ]
+      }
+    },
+    "ruta_modelo": {
+      "enum": [
+        "en_v3",
+        "es_v1"
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "version_contrato": "1.2",
+  "id_analisis": "bfb3af7d-45a1-40c5-872b-52d595e26ded",
+  "timestamp_utc": "2026-10-18T23:29:01+00:00",
+  "modelo": {
+    "version": "fusion_v1",
+    "variante": "V1_es",
+    "umbral_phishing": 0.5
+  },
+  "ruta_modelo": "es_v1",
+  "correo": {
+    "sha256": "41392b8e2eec8d735b99bbca7efc6461a4fc776138ae0d2be60d4e6e8f7d2ed5",
+    "asunto_defang": "Reunión de equipo"
+  },
+  "clasificacion": {
+    "clase": "legitimo",
+    "riesgo": 2,
+    "nivel_riesgo": "bajo",
+    "probabilidades": {
+      "legitimo": 0.92,
+      "spam": 0.06,
+      "phishing": 0.02
+    }
+  },
+  "ramas": {
+    "texto_distilbert": {
+      "legitimo": 0.92,
+      "spam": 0.06,
+      "phishing": 0.02
+    },
+    "texto_baseline": null,
+    "url": {
+      "max": null,
+      "media": null,
+      "n_urls": 0,
+      "sin_url": true
+    }
+  },
+  "iocs": {
+    "urls": [],
+    "ips": [],
+    "n_urls": 0,
+    "n_ips": 0
+  },
+  "mitre_attack": [],
+  "idioma_detectado": "es",
+  "advertencias": [],
+  "latencia_ms": 2.7
+}
