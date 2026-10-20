@@ -1,0 +1,110 @@
+{
+  "snapshot": "g17-phishing-raw-v1",
+  "creado_utc": "2026-09-28T20:06:27+00:00",
+  "entorno": "colab",
+  "fuentes": {
+    "kaggle_phishing_email": {
+      "origen": "https://www.kaggle.com/datasets/naserabdullahalam/phishing-email-dataset",
+      "ruta_cache_kagglehub": "/root/.cache/kagglehub/datasets/naserabdullahalam/phishing-email-dataset/versions/1",
+      "licencia": "Ver ficha de Kaggle; citar además Champa, Rabbi y Zibran (2024) como fuente académica",
+      "descargado_utc": "2026-09-28T19:58:03+00:00"
+    },
+    "phiusiil": {
+      "origen": "UCI Machine Learning Repository, id 967 (vía ucimlrepo)",
+      "licencia": "CC BY 4.0",
+      "cita": "Prasad & Chandra (2024), Computers & Security",
+      "nota": "El hash corresponde al CSV serializado desde ucimlrepo, no al ZIP original.",
+      "descargado_utc": "2026-09-28T20:02:00+00:00"
+    },
+    "spamassassin_raw": {
+      "origen": "https://spamassassin.apache.org/old/publiccorpus/",
+      "archivos": [
+        "20021010_easy_ham.tar.bz2",
+        "20021010_hard_ham.tar.bz2",
+        "20021010_spam.tar.bz2",
+        "20030228_easy_ham.tar.bz2",
+        "20030228_easy_ham_2.tar.bz2",
+        "20030228_hard_ham.tar.bz2",
+        "20030228_spam.tar.bz2",
+        "20030228_spam_2.tar.bz2",
+        "20050311_spam_2.tar.bz2"
+      ],
+      "licencia": "Ver readme.html del directorio",
+      "descargado_utc": "2026-09-28T20:03:55+00:00"
+    }
+  },
+  "archivos": {
+    "kaggle_phishing_email/CEAS_08.csv": {
+      "sha256": "22375e7d5f5a8229dbe987914ee9b3705656c590038662a7df6054629b376074",
+      "bytes": 67902056
+    },
+    "kaggle_phishing_email/Enron.csv": {
+      "sha256": "99933d3233510cf5dc2ee7768ddc609425cb8002bf5d7691d9a7157ffa5fd318",
+      "bytes": 45557673
+    },
+    "kaggle_phishing_email/Ling.csv": {
+      "sha256": "c133792260f18b251e9377b9cb31bef226322af6dc0d79841f61c67489929eca",
+      "bytes": 9342985
+    },
+    "kaggle_phishing_email/Nazario.csv": {
+      "sha256": "b8fbc4158fbdfaff1ed98584c43d72e283c6352d7ade4d457d34c1d79488d184",
+      "bytes": 7811841
+    },
+    "kaggle_phishing_email/Nigerian_Fraud.csv": {
+      "sha256": "f5d6930763cae6feeae6484131c79655a7440abbb97d6f51eab757aea4e6ab4b",
+      "bytes": 9192393
+    },
+    "kaggle_phishing_email/SpamAssasin.csv": {
+      "sha256": "3bfe8f8abff89f69a98456be50413c2fcb20a476141116dd84ee1507b980c00e",
+      "bytes": 14879195
+    },
+    "kaggle_phishing_email/phishing_email.csv": {
+      "sha256": "73a5c5410baf46ed69517fedfd37910f2e93777dc504b73ea483bc16be3a69d1",
+      "bytes": 106603543
+    },
+    "phiusiil/phiusiil_original.csv": {
+      "sha256": "8e2776b211706bff45ec9543c8fcd7dabfec43af9839b0f41875ccf1f26da386",
+      "bytes": 58920541
+    },
+    "spamassassin_raw/20021010_easy_ham.tar.bz2": {
+      "sha256": "f9fc56e1f68780f9afdc6d23a2e24c4584af988afc58bbfabae500e51f3a2f36",
+      "bytes": 1677144
+    },
+    "spamassassin_raw/20021010_hard_ham.tar.bz2": {
+      "sha256": "7cd46378877e00caa4e943920a854e2ef95ac29e296cf2a3ce691fb4104c4fbd",
+      "bytes": 1021126
+    },
+    "spamassassin_raw/20021010_spam.tar.bz2": {
+      "sha256": "048c2d2e61ff13f7cef88788c7184ee57dbc9049c58e5bd706fdb8537e9bac81",
+      "bytes": 1192582
+    },
+    "spamassassin_raw/20030228_easy_ham.tar.bz2": {
+      "sha256": "2b7b65904bcfcc31d2b5f51946f2d261370b257402cbbd62930b46ab83367438",
+      "bytes": 1612216
+    },
+    "spamassassin_raw/20030228_easy_ham_2.tar.bz2": {
+      "sha256": "b4bd3dc5ae5b40f38e99a0e41ad7d16b428b56e818e3a6ffa07330d62004dd38",
+      "bytes": 1077892
+    },
+    "spamassassin_raw/20030228_hard_ham.tar.bz2": {
+      "sha256": "ce2ce67880643dbde65ea7f85bffbfe4417349c4bd80b6b0de56262ae6b0a9c9",
+      "bytes": 1029898
+    },
+    "spamassassin_raw/20030228_spam.tar.bz2": {
+      "sha256": "c08debc32413804949a866be45ef78195cec2cbafd1da744ed76cdb860589743",
+      "bytes": 1183768
+    },
+    "spamassassin_raw/20030228_spam_2.tar.bz2": {
+      "sha256": "40bc444c596ff3e71505ae334f115b16f9b946786ee68f09b921b6b99217fd00",
+      "bytes": 2059563
+    },
+    "spamassassin_raw/20050311_spam_2.tar.bz2": {
+      "sha256": "44280a0e28bf7645b2279e8e42659271ad82c6f40bf8d364dbda7f1df344a765",
+      "bytes": 2059029
+    },
+    "spamassassin_raw/readme.html": {
+      "sha256": "9f8cc0c8be6f32b25226d3ece26da775a6e008581b8fb061a679e3acee6b64be",
+      "bytes": 4566
+    }
+  }
+}
