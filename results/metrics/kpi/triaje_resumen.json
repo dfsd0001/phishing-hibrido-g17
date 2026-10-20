@@ -1,0 +1,43 @@
+{
+ "n_registros": 40,
+ "n_correos": 20,
+ "mediana_seg_manual": 24.585,
+ "mediana_seg_asistido": 16.63,
+ "reduccion_tiempo_pct": 32.4,
+ "ic95_reduccion_pct": [
+  -25.2,
+  68.0
+ ],
+ "acierto_pct": {
+  "manual": 70.0,
+  "asistido": 90.0
+ },
+ "phishing_no_detectado_pct": {
+  "manual": 25.0,
+  "asistido": 12.5
+ },
+ "por_analista": {
+  "1": {
+   "manual": {
+    "mediana_seg": 34.67,
+    "acierto_pct": 90.0
+   },
+   "asistido": {
+    "mediana_seg": 21.77,
+    "acierto_pct": 80.0
+   }
+  },
+  "2": {
+   "manual": {
+    "mediana_seg": 17.695,
+    "acierto_pct": 50.0
+   },
+   "asistido": {
+    "mediana_seg": 13.82,
+    "acierto_pct": 100.0
+   }
+  }
+ },
+ "meta": "reducción >= 40 % (ambiciosa 60 %) sin aumentar el phishing no detectado (<= 5 %)",
+ "naturaleza": "estimación con 20 correos y dos perfiles (experto y no experto en triaje)"
+}

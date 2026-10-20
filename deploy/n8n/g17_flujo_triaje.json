@@ -1,0 +1,278 @@
+{
+ "id": "g17TriajeCorreo1",
+ "name": "G17 - Triaje de correo reportado (API, IRIS y Wazuh) v1.3",
+ "nodes": [
+  {
+   "id": "cace4e0f-730f-5c01-8e40-5628af81cab9",
+   "name": "Correo reportado",
+   "type": "n8n-nodes-base.webhook",
+   "typeVersion": 2,
+   "position": [
+    0,
+    300
+   ],
+   "parameters": {
+    "httpMethod": "POST",
+    "path": "g17-correo",
+    "responseMode": "responseNode",
+    "options": {}
+   },
+   "webhookId": "3720bd24-79df-53d3-84d6-e75e25c2bc7d"
+  },
+  {
+   "id": "cac43fd5-4db7-5e1d-b388-560618473d57",
+   "name": "Analizar (API G17)",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    240,
+    300
+   ],
+   "parameters": {
+    "method": "POST",
+    "url": "={{ ($env.G17_API_URL || 'http://api:7860') + '/v1/analizar' }}",
+    "sendHeaders": true,
+    "headerParameters": {
+     "parameters": [
+      {
+       "name": "X-API-Key",
+       "value": "={{ $env.G17_API_KEY }}"
+      }
+     ]
+    },
+    "sendBody": true,
+    "specifyBody": "json",
+    "jsonBody": "={{ JSON.stringify({ asunto: $json.body.asunto || '', cuerpo: $json.body.cuerpo || '' }) }}",
+    "options": {
+     "timeout": 30000
+    }
+   },
+   "onError": "continueErrorOutput"
+  },
+  {
+   "id": "cf2137be-d4b2-5e58-acf2-966ebce978b9",
+   "name": "Mapear contrato a IRIS y Wazuh",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    500,
+    200
+   ],
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// Convierte la respuesta de la API (contrato JSON v1.2) en una alerta de DFIR-IRIS y un evento de Wazuh.\n// Política de uso: el modelo sugiere y el analista decide. El flujo nunca cierra un caso por sí mismo.\nconst r = $json;\nconst c = r.clasificacion || {};\nconst advertencias = Array.isArray(r.advertencias) ? r.advertencias : [];\n\n// Con un idioma no soportado la clase del modelo no es fiable (en pruebas, un correo en francés\n// recibió riesgo 91). El correo se envía siempre a revisión manual y sin etiqueta de phishing.\nconst revisionManual = advertencias.includes('idioma_no_soportado');\nconst esPhishing = c.clase === 'phishing' && !revisionManual;\nconst requiereIris = esPhishing || revisionManual;\n\n// Identificadores de severidad en DFIR-IRIS v2.4.29. \"Medium\" tiene el id 1 porque lo crea una\n// migración antes que el resto: 1 Medium, 2 Unspecified, 3 Informational, 4 Low, 5 High, 6 Critical.\nconst SEVERIDAD = { medium: 1, low: 4, high: 5, critical: 6 };\nlet severidad = SEVERIDAD.low;\nif (revisionManual) {\n  severidad = SEVERIDAD.medium;\n} else if (c.nivel_riesgo === 'critico') {\n  severidad = SEVERIDAD.critical;\n} else if (esPhishing) {\n  severidad = SEVERIDAD.high;\n}\n\nconst iocs = r.iocs || { urls: [], ips: [] };\nconst asunto = (r.correo && r.correo.asunto_defang) || '(sin asunto)';\nconst titulo = esPhishing\n  ? `[G17] Phishing (riesgo ${c.riesgo}/100): ${asunto}`\n  : `[G17] Revisión manual (idioma ${r.idioma_detectado}): ${asunto}`;\nconst p = c.probabilidades || {};\nconst descripcion = [\n  `Clase sugerida: ${c.clase} - riesgo ${c.riesgo}/100 - nivel ${c.nivel_riesgo}`,\n  `Probabilidades: legítimo ${p.legitimo} - spam ${p.spam} - phishing ${p.phishing}`,\n  `Modelo: ${r.modelo && r.modelo.version} (${r.ruta_modelo}) - idioma ${r.idioma_detectado}`,\n  `Advertencias: ${advertencias.length ? advertencias.join(', ') : 'ninguna'}`,\n  `URL (defangeadas): ${(iocs.urls || []).join(' | ') || 'ninguna'}`,\n  `IP (defangeadas): ${(iocs.ips || []).join(' | ') || 'ninguna'}`,\n  `MITRE ATT&CK: ${(r.mitre_attack || []).map((m) => m.tecnica).join(', ')}`,\n  `SHA-256 del correo: ${r.correo && r.correo.sha256} - id_analisis ${r.id_analisis}`,\n  revisionManual\n    ? 'Idioma no soportado: el puntaje no es fiable. Triaje manual obligatorio.'\n    : 'Puntaje generado por el modelo: orientativo. La decisión de triaje corresponde al analista.',\n].join('\\n');\n\nconst etiquetas = esPhishing\n  ? ['g17', 'phishing', 'T1566', r.ruta_modelo]\n  : ['g17', 'revision_manual', r.ruta_modelo];\n\nconst iris_payload = {\n  alert_title: titulo.slice(0, 200),\n  alert_description: descripcion,\n  alert_source: 'G17-detector-phishing',\n  alert_source_ref: r.id_analisis,\n  alert_source_event_time: r.timestamp_utc,\n  alert_severity_id: severidad,\n  alert_status_id: 2, // New\n  alert_customer_id: Number($env.IRIS_CUSTOMER_ID || 1),\n  alert_tags: etiquetas.join(','),\n  alert_note: '',\n  // El contrato solo contiene la huella del correo, el asunto y los IOC defangeados.\n  alert_source_content: r,\n};\n\n// Control de defanging en la capa de integración: ningún IOC vivo sale de n8n.\nconst serializado = JSON.stringify(iris_payload);\nif (/\\b(?:https?|ftp):\\/\\//i.test(serializado) || /\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b/.test(serializado)) {\n  throw new Error('IOC vivo detectado en la alerta: se bloquea el envío');\n}\n\n// Con idioma no soportado se marca la clase como no fiable para que Wazuh aplique la regla 100503\n// y no las reglas de phishing 100501 y 100502.\nconst clasificacion = revisionManual\n  ? { clase: 'no_fiable', riesgo: c.riesgo, nivel_riesgo: 'no_fiable', clase_modelo: c.clase }\n  : { clase: c.clase, riesgo: c.riesgo, nivel_riesgo: c.nivel_riesgo };\n\nconst evento_wazuh = {\n  g17_evento: 'analisis_correo',\n  id_analisis: r.id_analisis,\n  clasificacion,\n  idioma_detectado: r.idioma_detectado,\n  ruta_modelo: r.ruta_modelo,\n  advertencias: advertencias.join(','),\n  n_urls: iocs.n_urls || 0,\n  latencia_ms: r.latencia_ms,\n};\n\nreturn { json: { origen: 'api', requiere_iris: requiereIris, iris_payload, evento_wazuh, analisis: r } };"
+   }
+  },
+  {
+   "id": "48da5fd7-d5df-5cad-9a6e-30d1bf90d81c",
+   "name": "Fallo API: revisión manual",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    500,
+    420
+   ],
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// Fallo seguro: si la API no responde, el correo pasa a la cola de revisión manual. Nunca se cierra.\nconst idEjecucion = $execution.id;\nconst detalle = ($json.error && ($json.error.message || JSON.stringify($json.error))) || 'sin detalle';\n\nconst iris_payload = {\n  alert_title: '[G17] Revisión manual: el detector no respondió',\n  alert_description: `La API del detector falló (${String(detalle).slice(0, 300)}). Triaje manual obligatorio.`,\n  alert_source: 'G17-detector-phishing',\n  alert_source_ref: `fallo-api-${idEjecucion}`,\n  alert_severity_id: 1, // Medium\n  alert_status_id: 2, // New\n  alert_customer_id: Number($env.IRIS_CUSTOMER_ID || 1),\n  alert_tags: 'g17,revision_manual,fallo_api',\n  alert_note: '',\n};\n\nconst evento_wazuh = {\n  g17_evento: 'analisis_correo',\n  id_analisis: `fallo-api-${idEjecucion}`,\n  clasificacion: { clase: 'desconocida', riesgo: -1, nivel_riesgo: 'desconocido' },\n  idioma_detectado: 'desconocido',\n  advertencias: 'fallo_api',\n  n_urls: 0,\n};\n\nreturn { json: { origen: 'fallo_api', requiere_iris: true, iris_payload, evento_wazuh, analisis: null } };"
+   }
+  },
+  {
+   "id": "98866341-082c-56e1-9b14-3715c97d42e7",
+   "name": "¿Requiere alerta IRIS?",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.2,
+   "position": [
+    760,
+    300
+   ],
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 2
+     },
+     "conditions": [
+      {
+       "id": "c3cde065-591e-55b5-a976-bdfd21cf657e",
+       "leftValue": "={{ $json.requiere_iris }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   }
+  },
+  {
+   "id": "301a7f72-248e-51c6-b57f-834721637fad",
+   "name": "Crear alerta IRIS",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    1000,
+    200
+   ],
+   "parameters": {
+    "method": "POST",
+    "url": "={{ ($env.IRIS_URL || 'http://app:8000') + '/alerts/add' }}",
+    "sendHeaders": true,
+    "headerParameters": {
+     "parameters": [
+      {
+       "name": "Authorization",
+       "value": "={{ 'Bearer ' + $env.IRIS_API_KEY }}"
+      }
+     ]
+    },
+    "sendBody": true,
+    "specifyBody": "json",
+    "jsonBody": "={{ JSON.stringify($json.iris_payload) }}",
+    "options": {
+     "timeout": 30000,
+     "allowUnauthorizedCerts": true
+    }
+   },
+   "onError": "continueRegularOutput"
+  },
+  {
+   "id": "efa4db5e-0924-57fd-b689-8cedd6f3c426",
+   "name": "Evento a Wazuh",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1240,
+    300
+   ],
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// Envía el evento a Wazuh (POST /events) y construye la respuesta del flujo.\n//\n// Límites de la API de Wazuh 4.14.8, verificados en su código fuente: 50 inicios de sesión cada\n// 300 s por IP y 30 solicitudes por minuto a /events. El token JWT (válido 900 s) se guarda en los\n// datos estáticos del flujo y se reutiliza para no bloquear la IP por exceso de inicios de sesión.\nconst base = $('¿Requiere alerta IRIS?').item.json;\nconst vieneDeIris = base.requiere_iris === true;\n\nlet irisAlertaId = null;\nlet irisEstado = 'no_requerida';\nif (vieneDeIris) {\n  const respuestaIris = $json;\n  irisAlertaId = (respuestaIris && respuestaIris.data && respuestaIris.data.alert_id) || null;\n  irisEstado = respuestaIris && respuestaIris.status === 'success' && irisAlertaId\n    ? 'creada'\n    : `error: ${JSON.stringify(respuestaIris).slice(0, 200)}`;\n}\n\nconst evento = { ...base.evento_wazuh, iris_alerta_id: irisAlertaId === null ? '' : String(irisAlertaId) };\nconst urlWazuh = $env.WAZUH_URL || 'https://wazuh:55000';\nconst datos = $getWorkflowStaticData('global');\n\nconst codigoHttp = (error) =>\n  error.httpCode ||\n  (error.response && error.response.status) ||\n  error.statusCode ||\n  (String(error.message).match(/status code (\\d{3})/) || [])[1] ||\n  '';\n\nconst iniciarSesion = async () => {\n  const respuesta = await this.helpers.httpRequest({\n    method: 'POST',\n    url: `${urlWazuh}/security/user/authenticate`,\n    auth: { username: $env.WAZUH_API_USER, password: $env.WAZUH_API_PASSWORD },\n    skipSslCertificateValidation: true,\n    json: true,\n    timeout: 15000,\n  });\n  datos.wz_token = respuesta.data.token;\n  datos.wz_exp = Date.now() + 800 * 1000;\n};\n\nconst enviarEvento = () =>\n  this.helpers.httpRequest({\n    method: 'POST',\n    url: `${urlWazuh}/events`,\n    headers: { Authorization: `Bearer ${datos.wz_token}` },\n    body: { events: [JSON.stringify(evento)] },\n    skipSslCertificateValidation: true,\n    json: true,\n    timeout: 15000,\n  });\n\nlet wazuhEstado;\ntry {\n  if (!datos.wz_token || !datos.wz_exp || Date.now() > datos.wz_exp) {\n    await iniciarSesion();\n  }\n  let respuesta;\n  try {\n    respuesta = await enviarEvento();\n  } catch (error) {\n    if (String(codigoHttp(error)) !== '401') {\n      throw error;\n    }\n    await iniciarSesion();\n    respuesta = await enviarEvento();\n  }\n  wazuhEstado = respuesta && respuesta.data && respuesta.data.total_affected_items === 1\n    ? 'enviado'\n    : `respuesta: ${JSON.stringify(respuesta).slice(0, 200)}`;\n} catch (error) {\n  const codigo = String(codigoHttp(error));\n  wazuhEstado = codigo === '429' ? 'limitado_429' : `error ${codigo}: ${String(error.message).slice(0, 150)}`;\n}\n\nconst analisis = base.analisis || {};\nconst c = analisis.clasificacion;\nreturn {\n  json: {\n    id_analisis: evento.id_analisis,\n    origen: base.origen,\n    clase: c ? c.clase : null,\n    riesgo: c ? c.riesgo : null,\n    nivel_riesgo: c ? c.nivel_riesgo : null,\n    ruta_modelo: analisis.ruta_modelo || null,\n    advertencias: analisis.advertencias || [],\n    iris: { requerida: vieneDeIris, estado: irisEstado, alerta_id: irisAlertaId },\n    wazuh: { estado: wazuhEstado },\n    latencia_api_ms: analisis.latencia_ms || null,\n  },\n};"
+   }
+  },
+  {
+   "id": "80ef9a6e-645c-5ff7-94ba-f8b59aa86013",
+   "name": "Responder",
+   "type": "n8n-nodes-base.respondToWebhook",
+   "typeVersion": 1.1,
+   "position": [
+    1480,
+    300
+   ],
+   "parameters": {
+    "respondWith": "json",
+    "responseBody": "={{ JSON.stringify($json) }}",
+    "options": {}
+   }
+  }
+ ],
+ "connections": {
+  "Correo reportado": {
+   "main": [
+    [
+     {
+      "node": "Analizar (API G17)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Analizar (API G17)": {
+   "main": [
+    [
+     {
+      "node": "Mapear contrato a IRIS y Wazuh",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Fallo API: revisión manual",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Mapear contrato a IRIS y Wazuh": {
+   "main": [
+    [
+     {
+      "node": "¿Requiere alerta IRIS?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Fallo API: revisión manual": {
+   "main": [
+    [
+     {
+      "node": "¿Requiere alerta IRIS?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Requiere alerta IRIS?": {
+   "main": [
+    [
+     {
+      "node": "Crear alerta IRIS",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Evento a Wazuh",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Crear alerta IRIS": {
+   "main": [
+    [
+     {
+      "node": "Evento a Wazuh",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Evento a Wazuh": {
+   "main": [
+    [
+     {
+      "node": "Responder",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "active": false,
+ "settings": {
+  "executionOrder": "v1",
+  "timezone": "America/Guayaquil"
+ },
+ "pinData": {},
+ "meta": {
+  "templateCredsSetupCompleted": true
+ },
+ "tags": []
+}

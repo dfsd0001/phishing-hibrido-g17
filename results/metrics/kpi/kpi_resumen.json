@@ -1,0 +1,29 @@
+{
+ "fecha": "2026-10-14 08:29:23",
+ "n_enviados": 200,
+ "n_http_200": 200,
+ "n_errores": 0,
+ "kpi_alertas_integradas_pct": 100.0,
+ "n_clasificados_phishing": 83,
+ "alertas_iris_requeridas": 83,
+ "alertas_iris_creadas": 83,
+ "eventos_wazuh_enviados_pct": 100.0,
+ "wazuh_estados": {
+  "enviado": 200
+ },
+ "latencia_ms_p50": 183.0,
+ "latencia_ms_p95": 275,
+ "iris_alertas_g17_antes": 91,
+ "iris_alertas_g17_despues": 174,
+ "iris_delta": 83,
+ "matriz_etiqueta_vs_sugerida": {
+  "en|legitimo->legitimo": 45,
+  "en|phishing->legitimo": 2,
+  "en|phishing->phishing": 58,
+  "en|spam->legitimo": 1,
+  "en|spam->spam": 44,
+  "es|legitimo->legitimo": 25,
+  "es|phishing->phishing": 25
+ },
+ "meta": "alertas integradas > 90 % (Matriz de KPIs)"
+}

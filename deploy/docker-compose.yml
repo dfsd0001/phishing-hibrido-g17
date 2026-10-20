@@ -1,0 +1,104 @@
+# Despliegue local del detector integrado con el SOC.
+# Requisito previo: DFIR-IRIS v2.4.29 levantado con su compose oficial, que crea la red externa
+# iris_frontend (ver deploy/README.md). Todos los puertos se publican solo en 127.0.0.1.
+name: g17-soc
+
+services:
+  api:
+    # Servicio de inferencia (contrato JSON v1.2, rutas inglés y español)
+    build:
+      context: ..
+      dockerfile: api/Dockerfile
+    image: g17/phishing-api:1.1
+    environment:
+      - API_KEY=${API_KEY}
+      - HF_TOKEN=${HF_TOKEN}
+      - MODEL_REPO=${MODEL_REPO}
+      - MODEL_REVISION=${MODEL_REVISION:-v2}
+      - DOMINIOS_PROPIOS=${DOMINIOS_PROPIOS:-}
+      - UMBRAL_EN=${UMBRAL_EN:-}
+    volumes:
+      - hf_cache:/home/usuario/.cache/huggingface
+    ports:
+      - "127.0.0.1:8000:7860"
+    networks: [soc, salida]
+    mem_limit: 3g
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import json, sys, urllib.request; r = json.load(urllib.request.urlopen('http://localhost:7860/salud')); sys.exit(r['estado'] != 'ok')"
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 240s
+
+  ui:
+    # Interfaz web (Streamlit) para analizar correos de forma interactiva. Consulta la API por la
+    # red interna; no carga modelos.
+    build:
+      context: ../app
+    image: g17/phishing-ui:1.0
+    environment:
+      - G17_API_URL=http://api:7860
+      - G17_API_KEY=${API_KEY}
+    ports:
+      - "127.0.0.1:8501:8501"
+    networks: [soc, interfaz]
+    depends_on:
+      api:
+        condition: service_healthy
+    mem_limit: 512m
+    restart: unless-stopped
+
+  n8n:
+    # Orquestación: llama a la API, crea alertas en DFIR-IRIS y envía eventos a Wazuh
+    image: n8nio/n8n:2.41.6
+    environment:
+      - GENERIC_TIMEZONE=America/Guayaquil
+      - TZ=America/Guayaquil
+      - N8N_SECURE_COOKIE=false            # acceso solo por localhost
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_PERSONALIZATION_ENABLED=false
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false # el flujo lee las claves de estas variables
+      - G17_API_KEY=${API_KEY}
+      - IRIS_API_KEY=${IRIS_API_KEY}
+      - IRIS_CUSTOMER_ID=${IRIS_CUSTOMER_ID:-1}
+      - WAZUH_API_USER=${WAZUH_API_USER}
+      - WAZUH_API_PASSWORD=${WAZUH_API_PASSWORD}
+    volumes:
+      - n8n_data:/home/node/.n8n
+    ports:
+      - "127.0.0.1:5678:5678"
+    networks: [soc, iris_frontend]
+    mem_limit: 1g
+    restart: unless-stopped
+
+  wazuh:
+    # Solo el manager (sin indexer ni dashboard, por memoria): reglas propias y alerts.json
+    image: wazuh/wazuh-manager:4.14.8
+    hostname: wazuh-manager
+    environment:
+      - API_USERNAME=${WAZUH_API_USER}
+      - API_PASSWORD=${WAZUH_API_PASSWORD}
+    volumes:
+      - ./wazuh/g17_rules.xml:/var/ossec/etc/rules/g17_rules.xml:ro
+      - wazuh_logs:/var/ossec/logs
+    networks: [soc]
+    mem_limit: 2g
+    restart: unless-stopped
+
+networks:
+  soc:
+    internal: true        # red del SOC sin salida a internet
+  salida: {}              # solo la API, para descargar el modelo la primera vez
+  interfaz: {}            # publica el puerto de la interfaz en localhost (la red soc es interna)
+  iris_frontend:
+    external: true        # creada por el compose oficial de DFIR-IRIS
+
+volumes:
+  hf_cache: {}
+  n8n_data: {}
+  wazuh_logs: {}
