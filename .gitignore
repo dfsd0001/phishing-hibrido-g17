@@ -1,0 +1,33 @@
+# Entornos y cachés de Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Secretos: nunca se versionan
+.env
+*.env
+!.env.example
+
+# Datos y artefactos pesados (se descargan con las instrucciones de data/README.md y models/README.md)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+models/*
+!models/README.md
+!models/manifiesto.json
+
+# Salidas locales de las pruebas de integración
+deploy/pruebas/kpi_muestra.csv
+deploy/pruebas/kpi_resultados.csv
+deploy/pruebas/triaje_muestra.json
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

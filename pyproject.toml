@@ -1,0 +1,47 @@
+[project]
+name = "phishing-hibrido-g17"
+version = "1.0.0"
+description = "Detección y clasificación híbrida de phishing (texto + URL) con integración SOC"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Dennys Francisco Salazar Domínguez" },
+    { name = "Lenin Bolívar González Rivadeneira" },
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = [
+    # Avisos de deprecación de librerías de terceros, ajenos al código del proyecto
+    "ignore::DeprecationWarning:starlette.*",
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+    "ignore:.*L-BFGS-B solver are deprecated:DeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "PL", "SIM"]
+ignore = [
+    "PLR0913",  # constructores con varios componentes del modelo
+    "PLR0915",  # funciones de notebook y de interfaz con muchas instrucciones secuenciales
+    "PLR0917",  # funciones de graficado con argumentos posicionales documentados
+    "PLR2004",  # constantes en pruebas y umbrales documentados
+    "PLC0415",  # importaciones perezosas a propósito (torch, xgboost, langdetect)
+    "N803",     # X mayúscula para matrices, convención de scikit-learn
+    "N806",
+    "N818",     # en español el sufijo va primero: ErrorAPI
+    "SIM108",   # se prefiere if-else explícito cuando el ternario anidado es menos legible
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["src", "api", "app", "contracts", "deploy", "tests", "cliente_api", "contenido"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR2004", "N802"]

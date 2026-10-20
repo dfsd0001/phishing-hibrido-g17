@@ -1,0 +1,21 @@
+# Entorno completo del proyecto: inferencia, entrenamiento en CPU, evaluación, interfaz y pruebas.
+# Los notebooks de GPU se ejecutaron en Google Colab (Python 3.13, GPU T4); allí instalan además
+# accelerate y datasets en su primera celda.
+-r api/requirements.txt
+
+PyYAML==6.0.3
+pyarrow==26.0.0
+matplotlib==3.11.2
+pillow==12.3.0
+optuna==5.0.0
+fairlearn==0.14.0
+
+# Interfaz web
+streamlit==1.66.0
+altair==6.3.0
+
+# Pruebas y calidad de código
+pytest==9.1.1
+httpx==0.28.1
+nbformat==5.11.1
+ruff==0.16.8
