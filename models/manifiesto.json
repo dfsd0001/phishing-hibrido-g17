@@ -1,0 +1,42 @@
+{
+  "repositorio": "dennysSalazar/g17-phishing-hibrido",
+  "visibilidad": "privado",
+  "version_vigente": "v2",
+  "versiones": {
+    "v1": {
+      "descripcion": "Ruta inglesa (fusión V3)",
+      "archivos": [
+        "models/baseline_tfidf_lr_v1.joblib",
+        "models/distilbert_v1/config.json",
+        "models/distilbert_v1/model.safetensors",
+        "models/distilbert_v1/tokenizer.json",
+        "models/distilbert_v1/tokenizer_config.json",
+        "models/fusion_v1.joblib",
+        "models/fusion_v1.meta.json",
+        "models/url_xgb_v1.meta.json",
+        "models/url_xgb_v1b_correos.json"
+      ]
+    },
+    "v2": {
+      "descripcion": "Ruta inglesa (fusión V3) y ruta española (V1_es)",
+      "agrega_a_v1": [
+        "models/distilbert_multi_v1/",
+        "models/fusion_es_v1.joblib",
+        "models/fusion_es_v1.meta.json"
+      ],
+      "total_archivos": 15
+    }
+  },
+  "umbrales": {
+    "en_v3_operativo": 0.8586,
+    "en_v3_validacion": 0.03899,
+    "es_v1": 0.84689
+  },
+  "versiones_de_entrenamiento": {
+    "python": "3.13.15",
+    "torch": "2.11.0",
+    "transformers": "5.17.0",
+    "scikit-learn": "1.6.1",
+    "xgboost": "3.4.1"
+  }
+}
