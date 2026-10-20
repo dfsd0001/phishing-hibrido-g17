@@ -1,0 +1,141 @@
+{
+ "experimento": "E0_solo_ingles",
+ "n_train": 38278,
+ "umbral_val": 0.9889,
+ "gpu": "Tesla T4",
+ "evaluaciones": {
+  "ingles_test": {
+   "umbral_recall95": {
+    "f1_macro": 0.9831,
+    "precision": {
+     "legitimo": 0.9925,
+     "spam": 0.9789,
+     "phishing": 0.9882
+    },
+    "recall": {
+     "legitimo": 0.9935,
+     "spam": 0.9926,
+     "phishing": 0.9536
+    },
+    "fpr_phishing": 0.0025,
+    "n": 8203
+   },
+   "argmax": {
+    "f1_macro": 0.9884,
+    "precision": {
+     "legitimo": 0.995,
+     "spam": 0.9906,
+     "phishing": 0.978
+    },
+    "recall": {
+     "legitimo": 0.9925,
+     "spam": 0.9903,
+     "phishing": 0.9839
+    },
+    "fpr_phishing": 0.0049,
+    "n": 8203
+   },
+   "auc_phishing_vs_legitimo": 0.9996
+  },
+  "es_nativo_test": {
+   "umbral_recall95": {
+    "f1_macro": 0.2776,
+    "precision": {
+     "legitimo": 0.3864,
+     "spam": 0.0,
+     "phishing": 0.6347
+    },
+    "recall": {
+     "legitimo": 0.1339,
+     "spam": 0.0,
+     "phishing": 0.6331
+    },
+    "fpr_phishing": 0.5551,
+    "n": 641
+   },
+   "argmax": {
+    "f1_macro": 0.2907,
+    "precision": {
+     "legitimo": 0.4407,
+     "spam": 0.0,
+     "phishing": 0.6278
+    },
+    "recall": {
+     "legitimo": 0.1024,
+     "spam": 0.0,
+     "phishing": 0.8062
+    },
+    "fpr_phishing": 0.7283,
+    "n": 641
+   },
+   "auc_phishing_vs_legitimo": 0.5665
+  },
+  "es_nativo_SpaPhish": {
+   "umbral_recall95": {
+    "f1_macro": 0.3748,
+    "precision": {
+     "legitimo": 0.8466,
+     "spam": 0.0,
+     "phishing": 0.708
+    },
+    "recall": {
+     "legitimo": 0.2532,
+     "spam": 0.0,
+     "phishing": 0.7637
+    },
+    "fpr_phishing": 0.3544,
+    "n": 1343
+   },
+   "argmax": {
+    "f1_macro": 0.3472,
+    "precision": {
+     "legitimo": 0.8462,
+     "spam": 0.0,
+     "phishing": 0.624
+    },
+    "recall": {
+     "legitimo": 0.1915,
+     "spam": 0.0,
+     "phishing": 0.8776
+    },
+    "fpr_phishing": 0.5949,
+    "n": 1343
+   },
+   "auc_phishing_vs_legitimo": 0.7722
+  },
+  "es_nativo_SpearPhishMX": {
+   "umbral_recall95": {
+    "f1_macro": 0.2534,
+    "precision": {
+     "legitimo": 0.2927,
+     "spam": 0.0,
+     "phishing": 0.6138
+    },
+    "recall": {
+     "legitimo": 0.1133,
+     "spam": 0.0,
+     "phishing": 0.5809
+    },
+    "fpr_phishing": 0.644,
+    "n": 2925
+   },
+   "argmax": {
+    "f1_macro": 0.2788,
+    "precision": {
+     "legitimo": 0.3544,
+     "spam": 0.0,
+     "phishing": 0.637
+    },
+    "recall": {
+     "legitimo": 0.0793,
+     "spam": 0.0,
+     "phishing": 0.7937
+    },
+    "fpr_phishing": 0.797,
+    "n": 2925
+   },
+   "auc_phishing_vs_legitimo": 0.4589
+  }
+ },
+ "segundos": 1069
+}

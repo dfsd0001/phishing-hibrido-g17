@@ -1,0 +1,44 @@
+{
+ "P1": "384 passed in 12.26s",
+ "carga_s": 32.4,
+ "P2_enrutamiento_pct": {
+  "es": 100.0,
+  "en": 100.0
+ },
+ "P3_fidelidad_es": {
+  "n": 250,
+  "pct_misma_clase": 100.0,
+  "dP_mediana": 0.0,
+  "dP_p95": 0.0001
+ },
+ "P4_contrato": {
+  "salidas": 400,
+  "invalidas": 0,
+  "con_ioc_vivo": 0
+ },
+ "P5_latencia": {
+  "en_v3": {
+   "media_ms": 249.4,
+   "p95_ms": 386.7
+  },
+  "es_v1": {
+   "media_ms": 208.6,
+   "p95_ms": 349.3
+  }
+ },
+ "P6_hub": {
+  "repo": "dennysSalazar/g17-phishing-hibrido",
+  "tags": [
+   "v2",
+   "v1"
+  ],
+  "archivos_v2": 15
+ },
+ "aceptacion": {
+  "P2": true,
+  "P3": true,
+  "P4": true,
+  "P5": true,
+  "P6": true
+ }
+}

@@ -1,0 +1,181 @@
+{
+ "entorno": "colab",
+ "E1_esquema": {
+  "SpaPhish": {
+   "archivo": "Spaphish dataset - DiB.csv",
+   "filas": 1395,
+   "columnas": 47,
+   "etiquetas": {
+    "1": 731,
+    "0": 664
+   },
+   "mapeo": {
+    "asunto": "subject",
+    "cuerpo": "body",
+    "etiqueta": "Label",
+    "fecha": "date",
+    "urls": "urls",
+    "clave": "hash"
+   }
+  },
+  "SpearPhishMX": {
+   "archivo": "SpearPhishMX_dataset_publico.csv",
+   "filas": 3006,
+   "columnas": 17,
+   "etiquetas": {
+    "1": 1891,
+    "0": 1115
+   },
+   "mapeo": {
+    "asunto": "asunto",
+    "cuerpo": "cuerpo_sanitizado",
+    "etiqueta": "etiqueta",
+    "fecha": "fecha",
+    "urls": null,
+    "clave": "hash"
+   }
+  }
+ },
+ "esperado_publicado": {
+  "SpaPhish": {
+   "filas": 1395,
+   "1": 731,
+   "0": 664
+  },
+  "SpearPhishMX": {
+   "filas": 3006
+  }
+ },
+ "E2_idioma_pct": {
+  "SpaPhish": {
+   "es": 96.3,
+   "en": 2.2,
+   "pt": 0.6,
+   "corto": 0.2,
+   "ca": 0.0
+  },
+  "SpearPhishMX": {
+   "es": 97.4,
+   "en": 1.7,
+   "pt": 0.5,
+   "corto": 0.0,
+   "ca": 0.2
+  }
+ },
+ "E3_duplicados": {
+  "duplicados_intra": {
+   "SpaPhish": 0,
+   "SpearPhishMX": 2
+  },
+  "hashes_en_ambas_fuentes": 1,
+  "hashes_con_clases_en_conflicto": 1
+ },
+ "E4_urls_y_marcadores": {
+  "SpaPhish": {
+   "pct_con_url": 81.4,
+   "pct_ioc_vivo_en_crudo": 29.5,
+   "marcadores_top": {
+    "[NAME]": 1,
+    "[ PROGRAMA TU ENTREGA ]": 1,
+    "[FIRMA]": 1
+   }
+  },
+  "SpearPhishMX": {
+   "pct_con_url": 64.1,
+   "pct_ioc_vivo_en_crudo": 0.5,
+   "marcadores_top": {
+    "<TELEFONO>": 2367,
+    "<EMAIL>": 767,
+    "<RFC>": 9,
+    "[CCA]": 1,
+    "[NAME]": 1
+   }
+  }
+ },
+ "E5_anios": [
+  {
+   "fuente": "SpaPhish",
+   "clase": "legitimo",
+   "count": "664",
+   "min": "2014.0",
+   "median": "2022.0",
+   "max": "2025.0"
+  },
+  {
+   "fuente": "SpaPhish",
+   "clase": "phishing",
+   "count": "707",
+   "min": "2019.0",
+   "median": "2025.0",
+   "max": "2025.0"
+  },
+  {
+   "fuente": "SpearPhishMX",
+   "clase": "legitimo",
+   "count": "0",
+   "min": "nan",
+   "median": "nan",
+   "max": "nan"
+  },
+  {
+   "fuente": "SpearPhishMX",
+   "clase": "phishing",
+   "count": "0",
+   "min": "nan",
+   "median": "nan",
+   "max": "nan"
+  }
+ ],
+ "exclusiones": {
+  "idioma_no_es": 129,
+  "casi_vacio": 0,
+  "conflicto_de_clase": 2,
+  "duplicado": 2
+ },
+ "final_grupo_x_clase": {
+  "legitimo": {
+   "SpaPhish": 632,
+   "SpearPhishMX": 1059,
+   "All": 1691
+  },
+  "phishing": {
+   "SpaPhish": 711,
+   "SpearPhishMX": 1866,
+   "All": 2577
+  },
+  "All": {
+   "SpaPhish": 1343,
+   "SpearPhishMX": 2925,
+   "All": 4268
+  }
+ },
+ "split_x_clase": {
+  "legitimo": {
+   "test": 254,
+   "train": 1183,
+   "val": 254
+  },
+  "phishing": {
+   "test": 387,
+   "train": 1804,
+   "val": 386
+  }
+ },
+ "marcadores_por_fuente_pct": {
+  "SpaPhish": {
+   "url": 27.1,
+   "ip": 0.7,
+   "email": 23.7,
+   "anio": 50.9,
+   "dominio_propio": 0.0
+  },
+  "SpearPhishMX": {
+   "url": 60.9,
+   "ip": 0.4,
+   "email": 13.7,
+   "anio": 56.9,
+   "dominio_propio": 0.0
+  }
+ },
+ "marcadores_crudos_residuales": 0
+}
