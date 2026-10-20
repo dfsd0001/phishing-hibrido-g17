@@ -1,0 +1,587 @@
+{
+ "umbrales": {
+  "validacion": 0.03898547141878372,
+  "operativo": 0.8586
+ },
+ "consistencia_con_fusion_v1": {
+  "f1_macro": {
+   "registrado": 0.9874,
+   "recalculado": 0.9874,
+   "diferencia": 0.0
+  },
+  "recall_phishing": {
+   "registrado": 0.9966,
+   "recalculado": 0.9966,
+   "diferencia": 0.0
+  },
+  "fpr_phishing": {
+   "registrado": 0.0091,
+   "recalculado": 0.0091,
+   "diferencia": 0.0
+  }
+ },
+ "metricas_ic95": {
+  "Piso (estratificado)": {
+   "F1 macro": [
+    0.3343616945165169,
+    0.32399818014465903,
+    0.3440377735788094
+   ],
+   "Recall phishing": [
+    0.19623655913978494,
+    0.17571143056217683,
+    0.21594373445594167
+   ],
+   "Precisión phishing": [
+    0.19273927392739273,
+    0.17268489869955644,
+    0.21230248917748917
+   ],
+   "FPR phishing": [
+    0.1821295606850335,
+    0.1732682522218927,
+    0.19162089910860175
+   ]
+  },
+  "Línea base TF-IDF": {
+   "F1 macro": [
+    0.9870405792333049,
+    0.9843247461037637,
+    0.9895902261084712
+   ],
+   "Recall phishing": [
+    0.9831989247311828,
+    0.9763558216167513,
+    0.9896985078277887
+   ],
+   "Precisión phishing": [
+    0.9753333333333334,
+    0.9670114360508927,
+    0.982890420849093
+   ],
+   "FPR phishing": [
+    0.005510052122114669,
+    0.0038557362811421727,
+    0.007442802130476474
+   ]
+  },
+  "DistilBERT": {
+   "F1 macro": [
+    0.9898895180820935,
+    0.9875236877842848,
+    0.9922561940467834
+   ],
+   "Recall phishing": [
+    0.9872311827956989,
+    0.9811317574014936,
+    0.9925475516180349
+   ],
+   "Precisión phishing": [
+    0.9793333333333333,
+    0.9721110905216345,
+    0.9862841566333198
+   ],
+   "FPR phishing": [
+    0.004616530156366344,
+    0.0031161893456002373,
+    0.00627704668158203
+   ]
+  },
+  "Fusión V3, umbral de validación": {
+   "F1 macro": [
+    0.9874427473557899,
+    0.9846368697374889,
+    0.9900222172565397
+   ],
+   "Recall phishing": [
+    0.9966397849462365,
+    0.9934421918280683,
+    0.9993270524899058
+   ],
+   "Precisión phishing": [
+    0.9604922279792746,
+    0.9504637650477216,
+    0.9699370888420514
+   ],
+   "FPR phishing": [
+    0.009084139985107967,
+    0.006860500682281593,
+    0.011431967425611044
+   ]
+  },
+  "Fusión V3, umbral operativo": {
+   "F1 macro": [
+    0.9869189567156003,
+    0.984077798909964,
+    0.9894588443964365
+   ],
+   "Recall phishing": [
+    0.9637096774193549,
+    0.9539170421666746,
+    0.9725851520507918
+   ],
+   "Precisión phishing": [
+    0.9910158949550795,
+    0.9857343980775255,
+    0.9952612223911294
+   ],
+   "FPR phishing": [
+    0.00193596425912137,
+    0.0010367145124993338,
+    0.003095234078126547
+   ]
+  }
+ },
+ "mcnemar": [
+  {
+   "A": "Línea base TF-IDF",
+   "B": "Fusión V3, umbral operativo",
+   "solo_a": 36,
+   "solo_b": 39,
+   "p_valor": 0.817554
+  },
+  {
+   "A": "DistilBERT",
+   "B": "Fusión V3, umbral operativo",
+   "solo_a": 51,
+   "solo_b": 33,
+   "p_valor": 0.062972
+  },
+  {
+   "A": "Fusión V3, umbral de validación",
+   "B": "Fusión V3, umbral operativo",
+   "solo_a": 49,
+   "solo_b": 47,
+   "p_valor": 0.918778
+  }
+ ],
+ "areas": {
+  "Línea base TF-IDF": {
+   "auc_roc": 0.99905,
+   "auc_pr": 0.99484
+  },
+  "DistilBERT": {
+   "auc_roc": 0.99943,
+   "auc_pr": 0.99747
+  },
+  "Fusión V3": {
+   "auc_roc": 0.99874,
+   "auc_pr": 0.99592
+  }
+ },
+ "calibracion": {
+  "DistilBERT": {
+   "ece": 0.00516,
+   "brier": 0.01528
+  },
+  "Fusión V3": {
+   "ece": 0.00548,
+   "brier": 0.01109
+  }
+ },
+ "subgrupos": {
+  "corpus": [
+   {
+    "corpus": "CEAS_08",
+    "recall_phishing": NaN,
+    "fpr": 0.0005,
+    "correos": 5844.0
+   },
+   {
+    "corpus": "Nigerian_Fraud",
+    "recall_phishing": 0.9452,
+    "fpr": NaN,
+    "correos": 493.0
+   },
+   {
+    "corpus": "SpamAssasin",
+    "recall_phishing": NaN,
+    "fpr": 0.0115,
+    "correos": 871.0
+   },
+   {
+    "corpus": "nazario_anual",
+    "recall_phishing": 0.9886,
+    "fpr": NaN,
+    "correos": 439.0
+   },
+   {
+    "corpus": "phishing_pot",
+    "recall_phishing": 0.9604,
+    "fpr": NaN,
+    "correos": 556.0
+   }
+  ],
+  "longitud": [
+   {
+    "longitud": "300 a 2.000",
+    "recall_phishing": 0.986,
+    "fpr": 0.0015,
+    "correos": 4214.0
+   },
+   {
+    "longitud": "< 300",
+    "recall_phishing": 0.932,
+    "fpr": 0.0,
+    "correos": 1909.0
+   },
+   {
+    "longitud": "> 2.000",
+    "recall_phishing": 0.9405,
+    "fpr": 0.0052,
+    "correos": 2080.0
+   }
+  ],
+  "url": [
+   {
+    "url": "con URL",
+    "recall_phishing": 0.9704,
+    "fpr": 0.0015,
+    "correos": 5736.0
+   },
+   {
+    "url": "sin URL",
+    "recall_phishing": 0.944,
+    "fpr": 0.0029,
+    "correos": 2467.0
+   }
+  ],
+  "antiguedad": [
+   {
+    "antiguedad": "2010 a 2019",
+    "recall_phishing": 0.9953,
+    "fpr": 0.0,
+    "correos": 213.0
+   },
+   {
+    "antiguedad": "2020 o después",
+    "recall_phishing": 0.9665,
+    "fpr": NaN,
+    "correos": 775.0
+   },
+   {
+    "antiguedad": "antes de 2010",
+    "recall_phishing": 0.943,
+    "fpr": 0.0019,
+    "correos": 7119.0
+   },
+   {
+    "antiguedad": "sin fecha",
+    "recall_phishing": 0.9625,
+    "fpr": 0.0,
+    "correos": 96.0
+   }
+  ]
+ },
+ "brechas_subgrupos": {
+  "corpus": {
+   "brecha_recall": 0.0434,
+   "brecha_fpr": 0.011,
+   "dentro_del_limite": true
+  },
+  "longitud": {
+   "brecha_recall": 0.054,
+   "brecha_fpr": 0.0052,
+   "dentro_del_limite": true
+  },
+  "url": {
+   "brecha_recall": 0.0264,
+   "brecha_fpr": 0.0014,
+   "dentro_del_limite": true
+  },
+  "antiguedad": {
+   "brecha_recall": 0.0523,
+   "brecha_fpr": 0.0019,
+   "dentro_del_limite": true
+  }
+ },
+ "ruta_espanola": {
+  "total": {
+   "correos": 641,
+   "recall_phishing": 0.9354,
+   "recall_ic95": [
+    0.9064,
+    0.9559
+   ],
+   "fpr": 0.0354,
+   "fpr_ic95": [
+    0.0188,
+    0.066
+   ]
+  },
+  "SpaPhish": {
+   "correos": 202,
+   "recall_phishing": 0.8972,
+   "recall_ic95": [
+    0.8252,
+    0.9416
+   ],
+   "fpr": 0.0947,
+   "fpr_ic95": [
+    0.0506,
+    0.1703
+   ]
+  },
+  "SpearPhishMX": {
+   "correos": 439,
+   "recall_phishing": 0.95,
+   "recall_ic95": [
+    0.9178,
+    0.97
+   ],
+   "fpr": 0.0,
+   "fpr_ic95": [
+    0.0,
+    0.0236
+   ]
+  }
+ },
+ "estres": {
+  "muestra": 2001,
+  "diferencia_bert_guardado": 0.00166,
+  "escenarios": [
+   {
+    "escenario": "Referencia",
+    "nivel": "sin perturbar",
+    "recall": 0.9587,
+    "precision": 0.9886,
+    "fpr": 0.0024,
+    "f1_macro": 0.9861,
+    "accuracy": 0.989,
+    "caida_recall": 0.0,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "A. Ruido",
+    "nivel": "2 % de letras",
+    "recall": 0.9532,
+    "precision": 0.9876,
+    "fpr": 0.0026,
+    "f1_macro": 0.9847,
+    "accuracy": 0.988,
+    "caida_recall": 0.0055,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "A. Ruido",
+    "nivel": "5 % de letras",
+    "recall": 0.9532,
+    "precision": 0.9867,
+    "fpr": 0.0028,
+    "f1_macro": 0.9844,
+    "accuracy": 0.9878,
+    "caida_recall": 0.0055,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "A. Ruido",
+    "nivel": "10 % de letras",
+    "recall": 0.9366,
+    "precision": 0.9855,
+    "fpr": 0.0031,
+    "f1_macro": 0.979,
+    "accuracy": 0.9832,
+    "caida_recall": 0.022,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "B. Ofuscación",
+    "nivel": "palabras sensibles",
+    "recall": 0.9504,
+    "precision": 0.9885,
+    "fpr": 0.0024,
+    "f1_macro": 0.984,
+    "accuracy": 0.9875,
+    "caida_recall": 0.0083,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "C. Información incompleta",
+    "nivel": "1000 caracteres",
+    "recall": 0.9614,
+    "precision": 0.9887,
+    "fpr": 0.0024,
+    "f1_macro": 0.9864,
+    "accuracy": 0.989,
+    "caida_recall": -0.0028,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "C. Información incompleta",
+    "nivel": "300 caracteres",
+    "recall": 0.9008,
+    "precision": 0.9879,
+    "fpr": 0.0024,
+    "f1_macro": 0.9703,
+    "accuracy": 0.977,
+    "caida_recall": 0.0579,
+    "veredicto": "FALLA"
+   },
+   {
+    "escenario": "D. Rama URL caída",
+    "nivel": "bloque URL neutro",
+    "recall": 0.9091,
+    "precision": 0.991,
+    "fpr": 0.0018,
+    "f1_macro": 0.9742,
+    "accuracy": 0.9805,
+    "caida_recall": 0.0496,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "E. Sin enlaces",
+    "nivel": "sin URL en texto ni rama",
+    "recall": 0.9201,
+    "precision": 0.9911,
+    "fpr": 0.0018,
+    "f1_macro": 0.9766,
+    "accuracy": 0.982,
+    "caida_recall": 0.0386,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "F. Desbalance",
+    "nivel": "10 % de phishing",
+    "recall": 0.9637,
+    "precision": 0.9805,
+    "fpr": 0.0021,
+    "f1_macro": 0.9864,
+    "accuracy": 0.9914,
+    "caida_recall": -0.005,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "F. Desbalance",
+    "nivel": "5 % de phishing",
+    "recall": 0.9637,
+    "precision": 0.9615,
+    "fpr": 0.002,
+    "f1_macro": 0.984,
+    "accuracy": 0.9931,
+    "caida_recall": -0.005,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "F. Desbalance",
+    "nivel": "1 % de phishing",
+    "recall": 0.9637,
+    "precision": 0.8366,
+    "fpr": 0.0019,
+    "f1_macro": 0.9623,
+    "accuracy": 0.9946,
+    "caida_recall": -0.005,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "G. Cambio de distribución",
+    "nivel": "loso_phishing_pot",
+    "recall": 0.8352,
+    "precision": NaN,
+    "fpr": 0.0095,
+    "f1_macro": 0.9401,
+    "accuracy": NaN,
+    "caida_recall": 0.1235,
+    "veredicto": "FALLA"
+   },
+   {
+    "escenario": "G. Cambio de distribución",
+    "nivel": "loso_Nigerian_Fraud",
+    "recall": 0.941,
+    "precision": NaN,
+    "fpr": 0.011,
+    "f1_macro": 0.9754,
+    "accuracy": NaN,
+    "caida_recall": 0.0177,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "G. Cambio de distribución",
+    "nivel": "loso_nazario_anual",
+    "recall": 0.9744,
+    "precision": NaN,
+    "fpr": 0.0097,
+    "f1_macro": 0.9849,
+    "accuracy": NaN,
+    "caida_recall": -0.0157,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "G. Cambio de distribución",
+    "nivel": "temporal_phishing_2025+",
+    "recall": 0.9858,
+    "precision": NaN,
+    "fpr": 0.0101,
+    "f1_macro": 0.9879,
+    "accuracy": NaN,
+    "caida_recall": -0.0271,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "G. Cambio de distribución",
+    "nivel": "correo corporativo (Enron)",
+    "recall": 0.9597,
+    "precision": NaN,
+    "fpr": 0.013,
+    "f1_macro": NaN,
+    "accuracy": NaN,
+    "caida_recall": -0.001,
+    "veredicto": "OK"
+   },
+   {
+    "escenario": "G. Cambio de distribución",
+    "nivel": "español nativo",
+    "recall": 0.9354,
+    "precision": NaN,
+    "fpr": 0.0354,
+    "f1_macro": NaN,
+    "accuracy": NaN,
+    "caida_recall": 0.0233,
+    "veredicto": "FALLA"
+   }
+  ]
+ },
+ "smart": [
+  {
+   "meta": "F1 macro >= 0,90",
+   "resultado": "0.9869 [0.9841, 0.9895]",
+   "fuente": "prueba, umbral operativo",
+   "cumple": true
+  },
+  {
+   "meta": "Recall de phishing >= 95 %",
+   "resultado": "0.9637 [0.9539, 0.9726]",
+   "fuente": "prueba, umbral operativo",
+   "cumple": true
+  },
+  {
+   "meta": "FPR <= 2 % (inglés, correo corporativo)",
+   "resultado": "1.3 % IC [0.8, 2.2]",
+   "fuente": "Enron, notebook 15",
+   "cumple": true
+  },
+  {
+   "meta": "FPR <= 2 % (español nativo)",
+   "resultado": "3.5 %",
+   "fuente": "prueba española",
+   "cumple": false
+  },
+  {
+   "meta": "Latencia < 1 s",
+   "resultado": "p95 275 ms de punta a punta",
+   "fuente": "lote KPI, 200 correos",
+   "cumple": true
+  },
+  {
+   "meta": "Alertas integradas > 90 %",
+   "resultado": "100.0 %",
+   "fuente": "lote KPI, IRIS y Wazuh",
+   "cumple": true
+  },
+  {
+   "meta": "Reducción del triaje N1 >= 40 %",
+   "resultado": "32.4 % IC [-25.2, 68.0] (estimación)",
+   "fuente": "20 correos, 2 analistas",
+   "cumple": false
+  }
+ ]
+}

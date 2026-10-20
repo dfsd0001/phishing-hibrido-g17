@@ -1,0 +1,137 @@
+{
+ "reglas": {
+  "grupos_excluidos": [
+   "Nazario",
+   "Enron",
+   "Ling"
+  ],
+  "grupos_con_filtro_idioma": [
+   "phishing_pot",
+   "nazario_anual"
+  ],
+  "idioma": "en",
+  "min_len_plano": 20,
+  "clases": {
+   "legitimo": 0,
+   "spam": 1,
+   "phishing": 2
+  },
+  "proporciones": {
+   "train": 0.7,
+   "val": 0.15,
+   "test": 0.15
+  },
+  "anio_corte_temporal": 2025,
+  "dominios_propios": {
+   "nazario_anual": [
+    "monkey.org",
+    "monkey"
+   ]
+  }
+ },
+ "bitacora_exclusiones": {
+  "grupo_excluido": 34191,
+  "casi_vacio": 30,
+  "idioma": 4396,
+  "duplicado": 1265
+ },
+ "correos_dataset_final": 54684,
+ "clase_por_corpus": {
+  "CEAS_08": {
+   "legitimo": 17289,
+   "phishing": 0,
+   "spam": 21674,
+   "Total": 38963
+  },
+  "Nigerian_Fraud": {
+   "legitimo": 0,
+   "phishing": 3290,
+   "spam": 0,
+   "Total": 3290
+  },
+  "SpamAssasin": {
+   "legitimo": 4090,
+   "phishing": 0,
+   "spam": 1712,
+   "Total": 5802
+  },
+  "nazario_anual": {
+   "legitimo": 0,
+   "phishing": 2927,
+   "spam": 0,
+   "Total": 2927
+  },
+  "phishing_pot": {
+   "legitimo": 0,
+   "phishing": 3702,
+   "spam": 0,
+   "Total": 3702
+  }
+ },
+ "particiones": {
+  "train": {
+   "legitimo": 14965,
+   "spam": 16370,
+   "phishing": 6943
+  },
+  "val": {
+   "legitimo": 3207,
+   "spam": 3508,
+   "phishing": 1488
+  },
+  "test": {
+   "legitimo": 3207,
+   "spam": 3508,
+   "phishing": 1488
+  }
+ },
+ "pliegues": {
+  "loso_CEAS_08": {
+   "fuera_de_distribucion": 38963,
+   "entrenamiento_restante": 11004
+  },
+  "loso_Nigerian_Fraud": {
+   "fuera_de_distribucion": 3290,
+   "entrenamiento_restante": 35975
+  },
+  "loso_SpamAssasin": {
+   "fuera_de_distribucion": 5802,
+   "entrenamiento_restante": 34217
+  },
+  "loso_nazario_anual": {
+   "fuera_de_distribucion": 2927,
+   "entrenamiento_restante": 36229
+  },
+  "loso_phishing_pot": {
+   "fuera_de_distribucion": 3702,
+   "entrenamiento_restante": 35687
+  },
+  "temporal_phishing_2025+": {
+   "fuera_de_distribucion": 2040,
+   "entrenamiento_restante": 36856
+  }
+ },
+ "reproduccion": {
+  "correos_publicado": 54684,
+  "correos_reconstruido": 54684,
+  "ids_en_ambos": 54684,
+  "misma_clase_pct": 100.0,
+  "misma_particion_pct": 100.0,
+  "mismo_texto_modelo_pct": 100.0,
+  "mismos_pliegues_pct": 100.0,
+  "reproduce_exactamente": true
+ },
+ "textos_con_ioc_vivo": 0,
+ "marcadores_pct": {
+  "url": 61.3,
+  "ip": 2.3,
+  "email": 32.9,
+  "anio": 44.9,
+  "dominio_propio": 1.2
+ },
+ "pesos_de_clase": {
+  "legitimo": 0.853,
+  "spam": 0.779,
+  "phishing": 1.838
+ }
+}

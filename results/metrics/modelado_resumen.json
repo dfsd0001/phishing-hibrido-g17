@@ -1,0 +1,307 @@
+{
+ "validacion": {
+  "dummy_most_frequent": {
+   "f1_macro": 0.1997,
+   "precision": {
+    "legitimo": 0.0,
+    "spam": 0.4276,
+    "phishing": 0.0
+   },
+   "recall": {
+    "legitimo": 0.0,
+    "spam": 1.0,
+    "phishing": 0.0
+   },
+   "fpr_phishing": 0.0,
+   "fpr_legitimo_a_phishing": 0.0,
+   "n": 8203
+  },
+  "dummy_stratified": {
+   "f1_macro": 0.3367,
+   "precision": {
+    "legitimo": 0.3929,
+    "spam": 0.4252,
+    "phishing": 0.1921
+   },
+   "recall": {
+    "legitimo": 0.3895,
+    "spam": 0.4253,
+    "phishing": 0.1956
+   },
+   "fpr_phishing": 0.1823,
+   "fpr_legitimo_a_phishing": 0.183,
+   "n": 8203
+  },
+  "baseline_publicado": {
+   "f1_macro": 0.9873,
+   "precision": {
+    "legitimo": 0.991,
+    "spam": 0.9909,
+    "phishing": 0.9805
+   },
+   "recall": {
+    "legitimo": 0.9928,
+    "spam": 0.9897,
+    "phishing": 0.9792
+   },
+   "fpr_phishing": 0.0043,
+   "fpr_legitimo_a_phishing": 0.0031,
+   "n": 8203
+  },
+  "distilbert": {
+   "f1_macro": 0.9893,
+   "precision": {
+    "legitimo": 0.9935,
+    "spam": 0.9929,
+    "phishing": 0.9806
+   },
+   "recall": {
+    "legitimo": 0.9935,
+    "spam": 0.9914,
+    "phishing": 0.9839
+   },
+   "fpr_phishing": 0.0043,
+   "fpr_legitimo_a_phishing": 0.0028,
+   "n": 8203
+  },
+  "fusion_V3": {
+   "f1_macro": 0.9879,
+   "precision": {
+    "legitimo": 0.995,
+    "spam": 0.9977,
+    "phishing": 0.9617
+   },
+   "recall": {
+    "legitimo": 0.9941,
+    "spam": 0.9835,
+    "phishing": 0.996
+   },
+   "fpr_phishing": 0.0088,
+   "fpr_legitimo_a_phishing": 0.0044,
+   "n": 8203
+  }
+ },
+ "baseline": {
+  "f1_val_publicado": 0.9873,
+  "c_optimo": 8.0,
+  "busqueda_c": {
+   "0.5": {
+    "f1_macro_val": 0.983,
+    "segundos": 126.1
+   },
+   "2.0": {
+    "f1_macro_val": 0.9865,
+    "segundos": 123.2
+   },
+   "8.0": {
+    "f1_macro_val": 0.9873,
+    "segundos": 113.7
+   }
+  },
+  "f1_val_reentrenado": 0.9873,
+  "coincidencia_predicciones_pct": 100.0,
+  "minutos": 6.3
+ },
+ "rama_url": {
+  "urls_entrenamiento": 10001,
+  "urls_descartadas_por_dominio": 95919,
+  "mejor_iteracion_reentrenada": 192,
+  "auc_correo_val_publicada": 0.8756,
+  "auc_correo_val_reentrenada": 0.8776
+ },
+ "distilbert": {
+  "arquitectura": {
+   "model_type": "distilbert",
+   "n_layers": 6,
+   "n_heads": 12,
+   "dim": 768,
+   "hidden_dim": 3072,
+   "vocab_size": 30527,
+   "max_position_embeddings": 512,
+   "dropout": 0.1,
+   "attention_dropout": 0.1,
+   "seq_classif_dropout": 0.2,
+   "parametros": 66959619
+  },
+  "historial": [
+   {
+    "epoca": 1,
+    "f1_val": 0.9841,
+    "loss": 0.0034,
+    "s": 255
+   },
+   {
+    "epoca": 2,
+    "f1_val": 0.988,
+    "loss": 0.0009,
+    "s": 268
+   },
+   {
+    "epoca": 3,
+    "f1_val": 0.9893,
+    "loss": 0.0003,
+    "s": 265
+   }
+  ]
+ },
+ "fusion": {
+  "variantes": {
+   "V0": {
+    "calibracion": "isotonic",
+    "brier_val_cv": 0.02259,
+    "brier_por_calibracion": {
+     "sigmoid": 0.02459,
+     "isotonic": 0.02259
+    },
+    "umbral": 0.1718067159974639,
+    "val_cv": {
+     "f1_macro": 0.9835,
+     "precision": {
+      "legitimo": 0.9888,
+      "spam": 0.9968,
+      "phishing": 0.9564
+     },
+     "recall": {
+      "legitimo": 0.9953,
+      "spam": 0.9772,
+      "phishing": 0.9872
+     },
+     "fpr_phishing": 0.01,
+     "fpr_legitimo_a_phishing": 0.0037,
+     "n": 8203
+    },
+    "ece_phishing_val_cv": 0.01216
+   },
+   "V1": {
+    "calibracion": "isotonic",
+    "brier_val_cv": 0.01519,
+    "brier_por_calibracion": {
+     "sigmoid": 0.0157,
+     "isotonic": 0.01519
+    },
+    "umbral": 0.08202317251154537,
+    "val_cv": {
+     "f1_macro": 0.9865,
+     "precision": {
+      "legitimo": 0.9962,
+      "spam": 0.9965,
+      "phishing": 0.9567
+     },
+     "recall": {
+      "legitimo": 0.9897,
+      "spam": 0.9857,
+      "phishing": 0.9946
+     },
+     "fpr_phishing": 0.01,
+     "fpr_legitimo_a_phishing": 0.0078,
+     "n": 8203
+    },
+    "ece_phishing_val_cv": 0.00253
+   },
+   "V2": {
+    "calibracion": "isotonic",
+    "brier_val_cv": 0.01405,
+    "brier_por_calibracion": {
+     "sigmoid": 0.01471,
+     "isotonic": 0.01405
+    },
+    "umbral": 0.07073900170050294,
+    "val_cv": {
+     "f1_macro": 0.9861,
+     "precision": {
+      "legitimo": 0.9965,
+      "spam": 0.9951,
+      "phishing": 0.9567
+     },
+     "recall": {
+      "legitimo": 0.9866,
+      "spam": 0.9872,
+      "phishing": 0.9953
+     },
+     "fpr_phishing": 0.01,
+     "fpr_legitimo_a_phishing": 0.0094,
+     "n": 8203
+    },
+    "ece_phishing_val_cv": 0.00197
+   },
+   "V3": {
+    "calibracion": "isotonic",
+    "brier_val_cv": 0.01168,
+    "brier_por_calibracion": {
+     "sigmoid": 0.01282,
+     "isotonic": 0.01168
+    },
+    "umbral": 0.03898547141878372,
+    "val_cv": {
+     "f1_macro": 0.9879,
+     "precision": {
+      "legitimo": 0.995,
+      "spam": 0.9977,
+      "phishing": 0.9617
+     },
+     "recall": {
+      "legitimo": 0.9941,
+      "spam": 0.9835,
+      "phishing": 0.996
+     },
+     "fpr_phishing": 0.0088,
+     "fpr_legitimo_a_phishing": 0.0044,
+     "n": 8203
+    },
+    "ece_phishing_val_cv": 0.00631
+   }
+  },
+  "comparacion_publicado": {
+   "elegida_ahora": "V3",
+   "elegida_publicada": "V3",
+   "umbral_ahora": 0.03899,
+   "umbral_publicado": 0.03899,
+   "calibracion_ahora": "isotonic",
+   "calibracion_publicada": "isotonic"
+  }
+ },
+ "terminos_baseline": {
+  "legitimo": [
+   "' > '",
+   "the",
+   "wrote",
+   "url",
+   "url __url__",
+   "'e: '",
+   "__url__ date",
+   "' --'",
+   "re",
+   "python",
+   "'-- '",
+   "tony"
+  ],
+  "spam": [
+   "__url__",
+   "'!! '",
+   "__email__",
+   "replica",
+   "watches",
+   "our",
+   "love",
+   "'!!!'",
+   "her",
+   "'!!! '",
+   "cnn",
+   "'e! '"
+  ],
+  "phishing": [
+   "your",
+   "bonus",
+   "' . '",
+   "emails",
+   "spins",
+   "free spins",
+   "dear",
+   "emails list",
+   "date __url__",
+   "claim",
+   "'’s '",
+   "here or"
+  ]
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "n_correos_tabla_intermedia": 94566,
+ "n_correos_dataset_final": 54684,
+ "n_correos_espanol_v2": 55130,
+ "corpus_por_clase": {
+  "legitimo": 4,
+  "spam": 4,
+  "phishing": 4
+ },
+ "pct_con_url_final": {
+  "legitimo": 71.5,
+  "phishing": 73.1,
+  "spam": 67.0
+ },
+ "calidad": {
+  "duplicados_dentro_del_corpus": 2702,
+  "huellas_en_varios_corpus": 441,
+  "huellas_con_clases_en_conflicto": 0,
+  "textos_casi_vacios": 39
+ },
+ "rango_anios": {
+  "legitimo": {
+   "count": 21402,
+   "min": 2002,
+   "50%": 2008,
+   "max": 2008
+  },
+  "phishing": {
+   "count": 16408,
+   "min": 1998,
+   "50%": 2023,
+   "max": 2026
+  },
+  "spam": {
+   "count": 23447,
+   "min": 1998,
+   "50%": 2008,
+   "max": 2020
+  }
+ },
+ "terminos_chi2": {
+  "legitimo": [
+   "wrote",
+   "re",
+   "list",
+   "mailing",
+   "python",
+   "but",
+   "___",
+   "version",
+   "linux",
+   "dev",
+   "there",
+   "opensuse"
+  ],
+  "spam": [
+   "warner",
+   "atlanta",
+   "cnn",
+   "georgia",
+   "cable",
+   "aug",
+   "preference",
+   "lllp",
+   "lp",
+   "settings",
+   "edt",
+   "videos"
+  ],
+  "phishing": [
+   "account",
+   "transaction",
+   "dear",
+   "bank",
+   "million",
+   "dollars",
+   "country",
+   "fund",
+   "sum",
+   "assistance",
+   "contact",
+   "security"
+  ]
+ },
+ "balance_final": {
+  "train": {
+   "legitimo": 14965,
+   "spam": 16370,
+   "phishing": 6943,
+   "phishing_pct": 18.1
+  },
+  "val": {
+   "legitimo": 3207,
+   "spam": 3508,
+   "phishing": 1488,
+   "phishing_pct": 18.1
+  },
+  "test": {
+   "legitimo": 3207,
+   "spam": 3508,
+   "phishing": 1488,
+   "phishing_pct": 18.1
+  }
+ },
+ "figuras": [
+  "fig01_clase_por_corpus.png",
+  "fig02_longitud_por_clase.png",
+  "fig03_presencia_url.png",
+  "fig04_anio_por_clase.png",
+  "fig05_idioma_por_corpus.png",
+  "fig06_duplicados.png",
+  "fig07_correlaciones.png",
+  "fig08_terminos_por_clase.png",
+  "fig09_espanol.png"
+ ]
+}
