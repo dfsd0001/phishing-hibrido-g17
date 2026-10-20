@@ -1,0 +1,351 @@
+{
+ "entorno": "colab",
+ "principal": {
+  "V0": {
+   "calibracion": "isotonic",
+   "brier_val_cv": 0.02259,
+   "umbral_fpr1": 0.17181,
+   "val_cv_umbral": {
+    "f1_macro": 0.9835,
+    "precision": {
+     "legitimo": 0.9888,
+     "spam": 0.9968,
+     "phishing": 0.9564
+    },
+    "recall": {
+     "legitimo": 0.9953,
+     "spam": 0.9772,
+     "phishing": 0.9872
+    },
+    "fpr_phishing": 0.01,
+    "fpr_legitimo_a_phishing": 0.0037,
+    "n": 8203
+   },
+   "test_umbral": {
+    "f1_macro": 0.9816,
+    "precision": {
+     "legitimo": 0.9867,
+     "spam": 0.9959,
+     "phishing": 0.9527
+    },
+    "recall": {
+     "legitimo": 0.9941,
+     "spam": 0.9738,
+     "phishing": 0.9872
+    },
+    "fpr_phishing": 0.0109,
+    "fpr_legitimo_a_phishing": 0.0031,
+    "n": 8203
+   },
+   "test_argmax": {
+    "f1_macro": 0.9846,
+    "precision": {
+     "legitimo": 0.9846,
+     "spam": 0.9954,
+     "phishing": 0.9701
+    },
+    "recall": {
+     "legitimo": 0.995,
+     "spam": 0.9803,
+     "phishing": 0.9825
+    },
+    "fpr_phishing": 0.0067,
+    "fpr_legitimo_a_phishing": 0.0022,
+    "n": 8203
+   },
+   "brier_test": 0.02486,
+   "ece_phishing_test": 0.01
+  },
+  "V1": {
+   "calibracion": "isotonic",
+   "brier_val_cv": 0.01519,
+   "umbral_fpr1": 0.08202,
+   "val_cv_umbral": {
+    "f1_macro": 0.9865,
+    "precision": {
+     "legitimo": 0.9962,
+     "spam": 0.9965,
+     "phishing": 0.9567
+    },
+    "recall": {
+     "legitimo": 0.9897,
+     "spam": 0.9857,
+     "phishing": 0.9946
+    },
+    "fpr_phishing": 0.01,
+    "fpr_legitimo_a_phishing": 0.0078,
+    "n": 8203
+   },
+   "test_umbral": {
+    "f1_macro": 0.9842,
+    "precision": {
+     "legitimo": 0.9956,
+     "spam": 0.9965,
+     "phishing": 0.9481
+    },
+    "recall": {
+     "legitimo": 0.9916,
+     "spam": 0.9792,
+     "phishing": 0.9953
+    },
+    "fpr_phishing": 0.0121,
+    "fpr_legitimo_a_phishing": 0.0059,
+    "n": 8203
+   },
+   "test_argmax": {
+    "f1_macro": 0.9891,
+    "precision": {
+     "legitimo": 0.9935,
+     "spam": 0.994,
+     "phishing": 0.9773
+    },
+    "recall": {
+     "legitimo": 0.9953,
+     "spam": 0.9886,
+     "phishing": 0.9859
+    },
+    "fpr_phishing": 0.0051,
+    "fpr_legitimo_a_phishing": 0.0019,
+    "n": 8203
+   },
+   "brier_test": 0.01396,
+   "ece_phishing_test": 0.00335
+  },
+  "V2": {
+   "calibracion": "isotonic",
+   "brier_val_cv": 0.01405,
+   "umbral_fpr1": 0.07074,
+   "val_cv_umbral": {
+    "f1_macro": 0.9861,
+    "precision": {
+     "legitimo": 0.9965,
+     "spam": 0.9951,
+     "phishing": 0.9567
+    },
+    "recall": {
+     "legitimo": 0.9866,
+     "spam": 0.9872,
+     "phishing": 0.9953
+    },
+    "fpr_phishing": 0.01,
+    "fpr_legitimo_a_phishing": 0.0094,
+    "n": 8203
+   },
+   "test_umbral": {
+    "f1_macro": 0.9862,
+    "precision": {
+     "legitimo": 0.9969,
+     "spam": 0.9957,
+     "phishing": 0.9555
+    },
+    "recall": {
+     "legitimo": 0.9888,
+     "spam": 0.9849,
+     "phishing": 0.9966
+    },
+    "fpr_phishing": 0.0103,
+    "fpr_legitimo_a_phishing": 0.0078,
+    "n": 8203
+   },
+   "test_argmax": {
+    "f1_macro": 0.9908,
+    "precision": {
+     "legitimo": 0.9959,
+     "spam": 0.9937,
+     "phishing": 0.98
+    },
+    "recall": {
+     "legitimo": 0.9953,
+     "spam": 0.99,
+     "phishing": 0.9899
+    },
+    "fpr_phishing": 0.0045,
+    "fpr_legitimo_a_phishing": 0.0012,
+    "n": 8203
+   },
+   "brier_test": 0.01261,
+   "ece_phishing_test": 0.00196
+  },
+  "V3": {
+   "calibracion": "isotonic",
+   "brier_val_cv": 0.01168,
+   "umbral_fpr1": 0.03899,
+   "val_cv_umbral": {
+    "f1_macro": 0.9879,
+    "precision": {
+     "legitimo": 0.995,
+     "spam": 0.9977,
+     "phishing": 0.9617
+    },
+    "recall": {
+     "legitimo": 0.9941,
+     "spam": 0.9835,
+     "phishing": 0.996
+    },
+    "fpr_phishing": 0.0088,
+    "fpr_legitimo_a_phishing": 0.0044,
+    "n": 8203
+   },
+   "test_umbral": {
+    "f1_macro": 0.9874,
+    "precision": {
+     "legitimo": 0.9938,
+     "spam": 0.9983,
+     "phishing": 0.9605
+    },
+    "recall": {
+     "legitimo": 0.9966,
+     "spam": 0.9798,
+     "phishing": 0.9966
+    },
+    "fpr_phishing": 0.0091,
+    "fpr_legitimo_a_phishing": 0.0022,
+    "n": 8203
+   },
+   "test_argmax": {
+    "f1_macro": 0.9932,
+    "precision": {
+     "legitimo": 0.9932,
+     "spam": 0.9974,
+     "phishing": 0.9867
+    },
+    "recall": {
+     "legitimo": 0.9984,
+     "spam": 0.9895,
+     "phishing": 0.994
+    },
+    "fpr_phishing": 0.003,
+    "fpr_legitimo_a_phishing": 0.0,
+    "n": 8203
+   },
+   "brier_test": 0.01109,
+   "ece_phishing_test": 0.00548
+  },
+  "elegida": "V3",
+  "elegida_detalle": {
+   "matriz_confusion_test": [
+    [
+     3196,
+     4,
+     7
+    ],
+    [
+     17,
+     3437,
+     54
+    ],
+    [
+     3,
+     2,
+     1483
+    ]
+   ],
+   "recall_phishing_por_grupo": {
+    "Nigerian_Fraud": 0.9939,
+    "nazario_anual": 1.0,
+    "phishing_pot": 0.9964
+   },
+   "riesgo_mediana_por_clase": {
+    "legitimo": 0,
+    "spam": 0,
+    "phishing": 100
+   },
+   "pct_phishing_con_riesgo_>=90": 94.3,
+   "pct_legitimo_con_riesgo_>=50": 0.0
+  }
+ },
+ "fuera_de_distribucion": {
+  "loso_phishing_pot": {
+   "segundos": 169,
+   "V0": {
+    "recall_phishing_fuera": 0.6848,
+    "fpr_phishing_test": 0.0124,
+    "f1_test": 0.888
+   },
+   "V1": {
+    "recall_phishing_fuera": 0.7364,
+    "fpr_phishing_test": 0.0127,
+    "f1_test": 0.9066
+   },
+   "V2": {
+    "recall_phishing_fuera": 0.8352,
+    "fpr_phishing_test": 0.0124,
+    "f1_test": 0.9379
+   },
+   "V3": {
+    "recall_phishing_fuera": 0.8352,
+    "fpr_phishing_test": 0.0095,
+    "f1_test": 0.9401
+   }
+  },
+  "loso_Nigerian_Fraud": {
+   "segundos": 188,
+   "V0": {
+    "recall_phishing_fuera": 0.917,
+    "fpr_phishing_test": 0.0098,
+    "f1_test": 0.9663
+   },
+   "V1": {
+    "recall_phishing_fuera": 0.8483,
+    "fpr_phishing_test": 0.0124,
+    "f1_test": 0.948
+   },
+   "V2": {
+    "recall_phishing_fuera": 0.6781,
+    "fpr_phishing_test": 0.0095,
+    "f1_test": 0.901
+   },
+   "V3": {
+    "recall_phishing_fuera": 0.941,
+    "fpr_phishing_test": 0.011,
+    "f1_test": 0.9754
+   }
+  },
+  "loso_nazario_anual": {
+   "segundos": 177,
+   "V0": {
+    "recall_phishing_fuera": 0.9552,
+    "fpr_phishing_test": 0.0104,
+    "f1_test": 0.9757
+   },
+   "V1": {
+    "recall_phishing_fuera": 0.9634,
+    "fpr_phishing_test": 0.0124,
+    "f1_test": 0.9802
+   },
+   "V2": {
+    "recall_phishing_fuera": 0.9634,
+    "fpr_phishing_test": 0.0113,
+    "f1_test": 0.9809
+   },
+   "V3": {
+    "recall_phishing_fuera": 0.9744,
+    "fpr_phishing_test": 0.0097,
+    "f1_test": 0.9849
+   }
+  },
+  "temporal_phishing_2025+": {
+   "segundos": 164,
+   "V0": {
+    "recall_phishing_fuera": 0.9333,
+    "fpr_phishing_test": 0.0116,
+    "f1_test": 0.9738
+   },
+   "V1": {
+    "recall_phishing_fuera": 0.9412,
+    "fpr_phishing_test": 0.0124,
+    "f1_test": 0.9766
+   },
+   "V2": {
+    "recall_phishing_fuera": 0.9794,
+    "fpr_phishing_test": 0.0137,
+    "f1_test": 0.9838
+   },
+   "V3": {
+    "recall_phishing_fuera": 0.9858,
+    "fpr_phishing_test": 0.0101,
+    "f1_test": 0.9879
+   }
+  }
+ }
+}

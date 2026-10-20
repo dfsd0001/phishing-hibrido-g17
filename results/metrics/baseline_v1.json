@@ -1,0 +1,359 @@
+{
+ "entorno": "colab",
+ "C_optimo": 8.0,
+ "busqueda_C": {
+  "0.5": {
+   "f1_val": 0.983,
+   "s": 135
+  },
+  "2.0": {
+   "f1_val": 0.9865,
+   "s": 136
+  },
+  "8.0": {
+   "f1_val": 0.9873,
+   "s": 130
+  }
+ },
+ "umbral_phishing_val_recall95": 0.7893,
+ "test_argmax": {
+  "f1_macro": 0.987,
+  "precision": {
+   "legitimo": 0.9901,
+   "spam": 0.9934,
+   "phishing": 0.9753
+  },
+  "recall": {
+   "legitimo": 0.9931,
+   "spam": 0.9872,
+   "phishing": 0.9832
+  },
+  "fpr_phishing": 0.0055,
+  "fpr_legitimo_a_phishing": 0.0028,
+  "n": 8203
+ },
+ "test_umbral_recall95": {
+  "f1_macro": 0.9846,
+  "precision": {
+   "legitimo": 0.9873,
+   "spam": 0.9861,
+   "phishing": 0.9876
+  },
+  "recall": {
+   "legitimo": 0.995,
+   "spam": 0.99,
+   "phishing": 0.9617
+  },
+  "fpr_phishing": 0.0027,
+  "fpr_legitimo_a_phishing": 0.0003,
+  "n": 8203
+ },
+ "matriz_confusion_test_umbral": [
+  [
+   3191,
+   15,
+   1
+  ],
+  [
+   18,
+   3473,
+   17
+  ],
+  [
+   23,
+   34,
+   1431
+  ]
+ ],
+ "test_umbral_sin_nigerian": {
+  "f1_macro": 0.9823,
+  "precision": {
+   "legitimo": 0.9885,
+   "spam": 0.9875,
+   "phishing": 0.9813
+  },
+  "recall": {
+   "legitimo": 0.995,
+   "spam": 0.99,
+   "phishing": 0.9518
+  },
+  "fpr_phishing": 0.0027,
+  "fpr_legitimo_a_phishing": 0.0003,
+  "n": 7710
+ },
+ "test_recall_phishing_por_grupo": {
+  "Nigerian_Fraud": 0.9817,
+  "nazario_anual": 0.9841,
+  "phishing_pot": 0.9263
+ },
+ "folds": {
+  "loso_CEAS_08": {
+   "test_completo": {
+    "f1_macro": 0.6037,
+    "precision": {
+     "legitimo": 0.6571,
+     "spam": 0.9186,
+     "phishing": 0.2819
+    },
+    "recall": {
+     "legitimo": 0.9383,
+     "spam": 0.4484,
+     "phishing": 0.957
+    },
+    "fpr_phishing": 0.0911,
+    "fpr_legitimo_a_phishing": 0.015,
+    "n": 41322
+   },
+   "solo_lo_fuera": {
+    "f1_macro": 0.4548,
+    "precision": {
+     "legitimo": 0.6494,
+     "spam": 0.92,
+     "phishing": 0.0
+    },
+    "recall": {
+     "legitimo": 0.9362,
+     "spam": 0.4423,
+     "phishing": 0.0
+    },
+    "fpr_phishing": 0.0929,
+    "fpr_legitimo_a_phishing": 0.0156,
+    "n": 38963
+   },
+   "segundos": 137
+  },
+  "loso_Nigerian_Fraud": {
+   "test_completo": {
+    "f1_macro": 0.7756,
+    "precision": {
+     "legitimo": 0.9764,
+     "spam": 0.5913,
+     "phishing": 0.9962
+    },
+    "recall": {
+     "legitimo": 0.995,
+     "spam": 0.9917,
+     "phishing": 0.4296
+    },
+    "fpr_phishing": 0.001,
+    "fpr_legitimo_a_phishing": 0.0,
+    "n": 11000
+   },
+   "solo_lo_fuera": {
+    "f1_macro": 0.1409,
+    "precision": {
+     "legitimo": 0.0,
+     "spam": 0.0,
+     "phishing": 1.0
+    },
+    "recall": {
+     "legitimo": 0.0,
+     "spam": 0.0,
+     "phishing": 0.2681
+    },
+    "fpr_phishing": null,
+    "fpr_legitimo_a_phishing": null,
+    "n": 3290
+   },
+   "segundos": 167
+  },
+  "loso_SpamAssasin": {
+   "test_completo": {
+    "f1_macro": 0.8888,
+    "precision": {
+     "legitimo": 0.8598,
+     "spam": 0.9536,
+     "phishing": 0.8697
+    },
+    "recall": {
+     "legitimo": 0.9762,
+     "spam": 0.7502,
+     "phishing": 0.9597
+    },
+    "fpr_phishing": 0.0184,
+    "fpr_legitimo_a_phishing": 0.0007,
+    "n": 13134
+   },
+   "solo_lo_fuera": {
+    "f1_macro": 0.4284,
+    "precision": {
+     "legitimo": 0.794,
+     "spam": 0.7723,
+     "phishing": 0.0
+    },
+    "recall": {
+     "legitimo": 0.9638,
+     "spam": 0.2833,
+     "phishing": 0.0
+    },
+    "fpr_phishing": 0.036,
+    "fpr_legitimo_a_phishing": 0.0012,
+    "n": 5802
+   },
+   "segundos": 165
+  },
+  "loso_nazario_anual": {
+   "test_completo": {
+    "f1_macro": 0.9489,
+    "precision": {
+     "legitimo": 0.8918,
+     "spam": 0.9612,
+     "phishing": 0.994
+    },
+    "recall": {
+     "legitimo": 0.995,
+     "spam": 0.9889,
+     "phishing": 0.876
+    },
+    "fpr_phishing": 0.0031,
+    "fpr_legitimo_a_phishing": 0.0003,
+    "n": 10691
+   },
+   "solo_lo_fuera": {
+    "f1_macro": 0.305,
+    "precision": {
+     "legitimo": 0.0,
+     "spam": 0.0,
+     "phishing": 1.0
+    },
+    "recall": {
+     "legitimo": 0.0,
+     "spam": 0.0,
+     "phishing": 0.8432
+    },
+    "fpr_phishing": null,
+    "fpr_legitimo_a_phishing": null,
+    "n": 2927
+   },
+   "segundos": 176
+  },
+  "loso_phishing_pot": {
+   "test_completo": {
+    "f1_macro": 0.7425,
+    "precision": {
+     "legitimo": 0.7666,
+     "spam": 0.6551,
+     "phishing": 0.9941
+    },
+    "recall": {
+     "legitimo": 0.9956,
+     "spam": 0.992,
+     "phishing": 0.4016
+    },
+    "fpr_phishing": 0.0016,
+    "fpr_legitimo_a_phishing": 0.0,
+    "n": 11349
+   },
+   "solo_lo_fuera": {
+    "f1_macro": 0.1398,
+    "precision": {
+     "legitimo": 0.0,
+     "spam": 0.0,
+     "phishing": 1.0
+    },
+    "recall": {
+     "legitimo": 0.0,
+     "spam": 0.0,
+     "phishing": 0.2653
+    },
+    "fpr_phishing": null,
+    "fpr_legitimo_a_phishing": null,
+    "n": 3702
+   },
+   "segundos": 165
+  },
+  "temporal_phishing_2025+": {
+   "test_completo": {
+    "f1_macro": 0.9172,
+    "precision": {
+     "legitimo": 0.9374,
+     "spam": 0.859,
+     "phishing": 0.994
+    },
+    "recall": {
+     "legitimo": 0.9953,
+     "spam": 0.99,
+     "phishing": 0.7678
+    },
+    "fpr_phishing": 0.0022,
+    "fpr_legitimo_a_phishing": 0.0003,
+    "n": 9936
+   },
+   "solo_lo_fuera": {
+    "f1_macro": 0.2648,
+    "precision": {
+     "legitimo": 0.0,
+     "spam": 0.0,
+     "phishing": 1.0
+    },
+    "recall": {
+     "legitimo": 0.0,
+     "spam": 0.0,
+     "phishing": 0.6588
+    },
+    "fpr_phishing": null,
+    "fpr_legitimo_a_phishing": null,
+    "n": 2040
+   },
+   "segundos": 158
+  }
+ },
+ "top_terminos": {
+  "legitimo": [
+   " > ",
+   "the",
+   "wrote",
+   "url",
+   "url __url__",
+   "e: ",
+   "__url__ date",
+   " --",
+   "re",
+   "python",
+   "-- ",
+   "tony",
+   " -- ",
+   "it",
+   "at"
+  ],
+  "spam": [
+   "__url__",
+   "!! ",
+   "__email__",
+   "replica",
+   "watches",
+   "our",
+   "love",
+   "!!!",
+   "her",
+   "!!! ",
+   "cnn",
+   "e! ",
+   "be removed",
+   "your ads",
+   " lov"
+  ],
+  "phishing": [
+   "your",
+   "bonus",
+   " . ",
+   "emails",
+   "spins",
+   "free spins",
+   "dear",
+   "emails list",
+   "date __url__",
+   "claim",
+   "’s ",
+   "here or",
+   "wallet",
+   "96",
+   "mr"
+  ]
+ },
+ "decision_semana3": {
+  "f1_macro_test": 0.987,
+  "f1_macro_peor_fold": 0.6037,
+  "umbral_75": true
+ }
+}

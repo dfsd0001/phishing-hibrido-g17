@@ -1,0 +1,88 @@
+{
+ "fold": "loso_Nigerian_Fraud",
+ "historial": [
+  {
+   "epoca": 1,
+   "f1_val": 0.9817,
+   "loss": 0.859,
+   "s": 241
+  },
+  {
+   "epoca": 2,
+   "f1_val": 0.9871,
+   "loss": 0.0003,
+   "s": 238
+  },
+  {
+   "epoca": 3,
+   "f1_val": 0.9882,
+   "loss": 0.0004,
+   "s": 237
+  }
+ ],
+ "umbral_val_recall95": 0.9923,
+ "test_argmax": {
+  "f1_macro": 0.8161,
+  "precision": {
+   "legitimo": 0.9819,
+   "spam": 0.6334,
+   "phishing": 0.9947
+  },
+  "recall": {
+   "legitimo": 0.9966,
+   "spam": 0.9912,
+   "phishing": 0.5237
+  },
+  "fpr_phishing": 0.0018,
+  "fpr_legitimo_a_phishing": 0.0009,
+  "n": 11000
+ },
+ "test_umbral_recall95": {
+  "f1_macro": 0.7243,
+  "precision": {
+   "legitimo": 0.9774,
+   "spam": 0.5468,
+   "phishing": 0.9978
+  },
+  "recall": {
+   "legitimo": 0.9966,
+   "spam": 0.9929,
+   "phishing": 0.3167
+  },
+  "fpr_phishing": 0.0004,
+  "fpr_legitimo_a_phishing": 0.0003,
+  "n": 11000
+ },
+ "segundos": 821,
+ "gpu": "Tesla T4",
+ "cfg": {
+  "modelo": "distilbert-base-uncased",
+  "max_len": 256,
+  "batch": 32,
+  "epocas": 3,
+  "lr": 5e-05,
+  "warmup": 0.1,
+  "semilla": 17,
+  "paciencia": 1,
+  "humo": {
+   "n": 512,
+   "pasos": 30
+  }
+ },
+ "solo_lo_fuera": {
+  "f1_macro": 0.0718,
+  "precision": {
+   "legitimo": 0.0,
+   "spam": 0.0,
+   "phishing": 1.0
+  },
+  "recall": {
+   "legitimo": 0.0,
+   "spam": 0.0,
+   "phishing": 0.1207
+  },
+  "fpr_phishing": null,
+  "fpr_legitimo_a_phishing": null,
+  "n": 3290
+ }
+}

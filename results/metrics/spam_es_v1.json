@@ -1,0 +1,44 @@
+{
+ "entorno": "colab",
+ "traductor": "Helsinki-NLP/opus-mt-en-es",
+ "spam_traducido": 23562,
+ "control_traducido": 3000,
+ "sinteticos": 0,
+ "spam_es_final": 0,
+ "emails_es_v2_grupo_x_clase": {
+  "legitimo": {
+   "SpaPhish": 632,
+   "SpearPhishMX": 1059,
+   "traducido_legitimo": 21083,
+   "traducido_phishing": 0,
+   "traducido_spam": 0,
+   "All": 22774
+  },
+  "phishing": {
+   "SpaPhish": 711,
+   "SpearPhishMX": 1866,
+   "traducido_legitimo": 0,
+   "traducido_phishing": 9753,
+   "traducido_spam": 0,
+   "All": 12330
+  },
+  "spam": {
+   "SpaPhish": 0,
+   "SpearPhishMX": 0,
+   "traducido_legitimo": 0,
+   "traducido_phishing": 0,
+   "traducido_spam": 20026,
+   "All": 20026
+  },
+  "All": {
+   "SpaPhish": 1343,
+   "SpearPhishMX": 2925,
+   "traducido_legitimo": 21083,
+   "traducido_phishing": 9753,
+   "traducido_spam": 20026,
+   "All": 55130
+  }
+ },
+ "auc_artefacto_traduccion": 0.997,
+ "ejemplo_traducido": "Olvidado de peso Buenos días, amigo. Pérdida de peso sin tener hambre! Pure Hoodia proporciona un buen enfoque natural para la pérdida de peso. Hoodia ha sido presentado en CNN, BBC, OPRAH y CBS 60 Mi"
+}

@@ -1,0 +1,69 @@
+{
+ "entorno": "colab",
+ "P1_pruebas": "363 passed, 1 skipped in 9.06s",
+ "carga_s": 31.3,
+ "P2_fidelidad": {
+  "n": 322,
+  "pct_texto_modelo_identico": 100.0,
+  "pct_n_urls_identico": 97.2,
+  "pct_misma_clase_que_07": 100.0,
+  "dP_mediana": 0.0,
+  "dP_p95": 0.0,
+  "acierto_vs_etiqueta_pct": 99.7
+ },
+ "P3_contrato": {
+  "salidas": 322,
+  "invalidas_contra_esquema": 0,
+  "con_ioc_vivo": 0
+ },
+ "P4_latencia": {
+  "n": 100,
+  "media_ms": 200.3,
+  "p95_ms": 348.2,
+  "max_ms": 387.0,
+  "cumple_<1000ms": true
+ },
+ "P5_revision_manual": {
+  "archivo": "revision_manual_pot_revisado.csv",
+  "revisados": 50,
+  "por_veredicto": {
+   "phishing": {
+    "n": 21,
+    "pct": 42.0,
+    "ic95": [
+     29.4,
+     55.8
+    ]
+   },
+   "spam": {
+    "n": 17,
+    "pct": 34.0,
+    "ic95": [
+     22.4,
+     47.8
+    ]
+   },
+   "estafa": {
+    "n": 11,
+    "pct": 22.0,
+    "ic95": [
+     12.8,
+     35.2
+    ]
+   },
+   "legitimo": {
+    "n": 1,
+    "pct": 2.0,
+    "ic95": [
+     0.4,
+     10.5
+    ]
+   }
+  }
+ },
+ "aceptacion": {
+  "P2": true,
+  "P3": true,
+  "P4": true
+ }
+}

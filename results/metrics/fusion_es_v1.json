@@ -1,0 +1,140 @@
+{
+ "entorno": "colab",
+ "url_sola_auc_test_por_fuente": {
+  "SpaPhish": 0.374,
+  "SpearPhishMX": 0.4451,
+  "pct_con_url": {
+   "SpaPhish": 80.9,
+   "SpearPhishMX": 65.4
+  }
+ },
+ "url_transfiere": false,
+ "variantes": {
+  "V1_es": {
+   "calibracion": "sigmoid",
+   "brier_val_cv": 0.03725,
+   "umbral_fpr1": 0.84689,
+   "val_cv": {
+    "recall_phishing": 0.9223,
+    "precision_phishing": 0.9944,
+    "fpr_legitimo_a_phishing": 0.0079,
+    "f1_phishing": 0.957,
+    "matriz_[tn,fp,fn,tp]": [
+     252,
+     2,
+     30,
+     356
+    ],
+    "n": 640
+   },
+   "test": {
+    "recall_phishing": 0.9354,
+    "precision_phishing": 0.9757,
+    "fpr_legitimo_a_phishing": 0.0354,
+    "f1_phishing": 0.9551,
+    "matriz_[tn,fp,fn,tp]": [
+     245,
+     9,
+     25,
+     362
+    ],
+    "n": 641
+   },
+   "auc_test": 0.9842,
+   "brier_test": 0.04416,
+   "ece_test": 0.02233,
+   "test_por_fuente": {
+    "SpaPhish": {
+     "recall_phishing": 0.8972,
+     "precision_phishing": 0.9143,
+     "fpr_legitimo_a_phishing": 0.0947,
+     "f1_phishing": 0.9057,
+     "matriz_[tn,fp,fn,tp]": [
+      86,
+      9,
+      11,
+      96
+     ],
+     "n": 202
+    },
+    "SpearPhishMX": {
+     "recall_phishing": 0.95,
+     "precision_phishing": 1.0,
+     "fpr_legitimo_a_phishing": 0.0,
+     "f1_phishing": 0.9744,
+     "matriz_[tn,fp,fn,tp]": [
+      159,
+      0,
+      14,
+      266
+     ],
+     "n": 439
+    }
+   }
+  },
+  "V2_es": {
+   "calibracion": "sigmoid",
+   "brier_val_cv": 0.03594,
+   "umbral_fpr1": 0.83553,
+   "val_cv": {
+    "recall_phishing": 0.9249,
+    "precision_phishing": 0.9944,
+    "fpr_legitimo_a_phishing": 0.0079,
+    "f1_phishing": 0.9584,
+    "matriz_[tn,fp,fn,tp]": [
+     252,
+     2,
+     29,
+     357
+    ],
+    "n": 640
+   },
+   "test": {
+    "recall_phishing": 0.9302,
+    "precision_phishing": 0.973,
+    "fpr_legitimo_a_phishing": 0.0394,
+    "f1_phishing": 0.9511,
+    "matriz_[tn,fp,fn,tp]": [
+     244,
+     10,
+     27,
+     360
+    ],
+    "n": 641
+   },
+   "auc_test": 0.9882,
+   "brier_test": 0.04116,
+   "ece_test": 0.02299,
+   "test_por_fuente": {
+    "SpaPhish": {
+     "recall_phishing": 0.8879,
+     "precision_phishing": 0.9048,
+     "fpr_legitimo_a_phishing": 0.1053,
+     "f1_phishing": 0.8962,
+     "matriz_[tn,fp,fn,tp]": [
+      85,
+      10,
+      12,
+      95
+     ],
+     "n": 202
+    },
+    "SpearPhishMX": {
+     "recall_phishing": 0.9464,
+     "precision_phishing": 1.0,
+     "fpr_legitimo_a_phishing": 0.0,
+     "f1_phishing": 0.9725,
+     "matriz_[tn,fp,fn,tp]": [
+      159,
+      0,
+      15,
+      265
+     ],
+     "n": 439
+    }
+   }
+  }
+ },
+ "elegida": "V1_es",
+ "motivo": "regla D21: rama URL sola por debajo del azar en todas las fuentes ([0.374, 0.4451])"
+}

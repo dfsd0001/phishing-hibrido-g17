@@ -1,0 +1,112 @@
+{
+ "n_enron_en": 2000,
+ "n_test_phishing": 1488,
+ "umbral_actual": 0.039,
+ "actual": {
+  "umbral": 0.039,
+  "FPR_enron_B_pct": 12.5,
+  "IC95_B": [
+   10.6,
+   14.7
+  ],
+  "FPR_test_legit_pct": 0.1,
+  "recall_test_phishing_pct": 99.73
+ },
+ "enron_ham_pred_spam_pct": 2.5,
+ "FPR_enron_por_longitud": {
+  "<300 car.": 20.3,
+  ">=300 car.": 10.6
+ },
+ "umbral_operativo_A": {
+  "umbral": 0.8586,
+  "FPR_enron_B_pct": 1.3,
+  "IC95_B": [
+   0.8,
+   2.2
+  ],
+  "FPR_test_legit_pct": 0.0,
+  "recall_test_phishing_pct": 95.97
+ },
+ "tabla": [
+  {
+   "umbral": 0.039,
+   "FPR_enron_B_pct": 12.5,
+   "IC95_B": [
+    10.6,
+    14.7
+   ],
+   "FPR_test_legit_pct": 0.1,
+   "recall_test_phishing_pct": 99.73
+  },
+  {
+   "umbral": 0.3,
+   "FPR_enron_B_pct": 6.0,
+   "IC95_B": [
+    4.7,
+    7.6
+   ],
+   "FPR_test_legit_pct": 0.0,
+   "recall_test_phishing_pct": 99.46
+  },
+  {
+   "umbral": 0.5,
+   "FPR_enron_B_pct": 5.0,
+   "IC95_B": [
+    3.8,
+    6.5
+   ],
+   "FPR_test_legit_pct": 0.0,
+   "recall_test_phishing_pct": 99.33
+  },
+  {
+   "umbral": 0.7,
+   "FPR_enron_B_pct": 3.1,
+   "IC95_B": [
+    2.2,
+    4.4
+   ],
+   "FPR_test_legit_pct": 0.0,
+   "recall_test_phishing_pct": 98.79
+  },
+  {
+   "umbral": 0.8,
+   "FPR_enron_B_pct": 2.4,
+   "IC95_B": [
+    1.6,
+    3.5
+   ],
+   "FPR_test_legit_pct": 0.0,
+   "recall_test_phishing_pct": 97.85
+  },
+  {
+   "umbral": 0.9,
+   "FPR_enron_B_pct": 0.4,
+   "IC95_B": [
+    0.2,
+    1.0
+   ],
+   "FPR_test_legit_pct": 0.0,
+   "recall_test_phishing_pct": 92.88
+  },
+  {
+   "umbral": 0.95,
+   "FPR_enron_B_pct": 0.2,
+   "IC95_B": [
+    0.1,
+    0.7
+   ],
+   "FPR_test_legit_pct": 0.0,
+   "recall_test_phishing_pct": 72.58
+  },
+  {
+   "umbral": 0.99,
+   "FPR_enron_B_pct": 0.1,
+   "IC95_B": [
+    0.0,
+    0.6
+   ],
+   "FPR_test_legit_pct": 0.0,
+   "recall_test_phishing_pct": 60.82
+  }
+ ]
+}
