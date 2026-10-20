@@ -1,0 +1,89 @@
+{
+  "descripcion": "Validación externa cualitativa con cuatro correos de phishing reales que el modelo no vio en el entrenamiento. Los correos no se redistribuyen: se identifican por su huella SHA-256 y se descargan de la fuente original.",
+  "fuente": {
+    "sitio": "malware-traffic-analysis.net",
+    "pagina": "https://www.malware-traffic-analysis.net/2020/05/05/index.html",
+    "titulo": "2020-05-05 - 4 examples of phishing emails with fake login pages",
+    "fecha_correos": "2020-05-05",
+    "licencia": "No publicada en la página; por eso el contenido de los correos no se incluye en el repositorio."
+  },
+  "procedimiento": {
+    "fecha_prueba": "2026-10-20",
+    "entorno": "Pila local de deploy/docker-compose.yml: interfaz Streamlit (servicio ui) y API FastAPI (servicio api) con los artefactos fusion_v1 V3 del repositorio privado de Hugging Face.",
+    "umbral_phishing": 0.8586,
+    "entrada": "Archivo .eml completo subido en la pestaña Subir un archivo .eml.",
+    "lectura_de_probabilidades": "Valores leídos de la interfaz, redondeados a 0,1 %. El riesgo, el nivel, la ruta y la latencia provienen del historial exportado en CSV.",
+    "conteo_de_urls": "URL que el detector extrae del correo (ioc_utils.urls_para_features), calculado sin resolver ni visitar ninguna."
+  },
+  "correos": [
+    {
+      "archivo": "2020-05-05-phishing-email-example-01.eml",
+      "sha256": "2c76b313c0313795f04181ed15d7566513ae67d9b89fbd0730839179b7fa69a3",
+      "bytes": 3383,
+      "tema": "Aviso final para confirmar la propiedad de la cuenta de correo",
+      "caracteres_texto_plano": 188,
+      "urls_extraidas": 3,
+      "clase": "phishing",
+      "riesgo": 100,
+      "nivel_riesgo": "critico",
+      "probabilidades_pct": {"legitimo": 0.0, "spam": 0.1, "phishing": 99.9},
+      "ruta_modelo": "en_v3",
+      "latencia_ms": 73
+    },
+    {
+      "archivo": "2020-05-05-phishing-email-example-02.eml",
+      "sha256": "de6336f347a7c26d26fee013a26d044b0f2b9a1cc050e872eed75093d6031442",
+      "bytes": 2274,
+      "tema": "Tres entregas de correo fallidas; recuperar los mensajes",
+      "caracteres_texto_plano": 209,
+      "urls_extraidas": 2,
+      "clase": "phishing",
+      "riesgo": 100,
+      "nivel_riesgo": "critico",
+      "probabilidades_pct": {"legitimo": 0.0, "spam": 0.2, "phishing": 99.8},
+      "ruta_modelo": "en_v3",
+      "latencia_ms": 364
+    },
+    {
+      "archivo": "2020-05-05-phishing-email-example-03.eml",
+      "sha256": "147062cf2eaa92bb879f5360ab81d69b78fce06cfc904244a3ffed08e1bb1fcc",
+      "bytes": 5125,
+      "tema": "Confirmar la dirección de correo registrada",
+      "caracteres_texto_plano": 368,
+      "urls_extraidas": 4,
+      "clase": "phishing",
+      "riesgo": 98,
+      "nivel_riesgo": "critico",
+      "probabilidades_pct": {"legitimo": 1.8, "spam": 0.0, "phishing": 98.1},
+      "ruta_modelo": "en_v3",
+      "latencia_ms": 79
+    },
+    {
+      "archivo": "2020-05-05-phishing-email-example-04.eml",
+      "sha256": "b264818bdfa95e0498fcc48734a9e40921e15d8d389294a703094e9691905de6",
+      "bytes": 33670,
+      "tema": "Revalidar la cuenta para evitar la suspensión del buzón",
+      "caracteres_texto_plano": 523,
+      "urls_extraidas": 2,
+      "clase": "phishing",
+      "riesgo": 100,
+      "nivel_riesgo": "critico",
+      "probabilidades_pct": {"legitimo": 0.0, "spam": 0.1, "phishing": 99.9},
+      "ruta_modelo": "en_v3",
+      "latencia_ms": 104
+    }
+  ],
+  "resumen": {
+    "detectados_como_phishing": 4,
+    "total": 4,
+    "intervalo_wilson_95": [0.51, 1.0],
+    "riesgo_minimo": 98,
+    "latencia_maxima_ms": 364,
+    "lectura": "Los cuatro correos se clasifican como phishing con riesgo crítico. Con cuatro casos el intervalo de confianza va de 51 % a 100 %, de modo que es una demostración cualitativa de que el sistema funciona con correos reales y no una métrica; las métricas del proyecto son las de results/metrics/evaluacion_final.json."
+  },
+  "observaciones": [
+    "En tres de los cuatro correos el extractor cuenta como URL la declaración DOCTYPE de HTML 4.01 (www.w3.org/TR/html4/loose.dtd), y en dos cuenta el enlace de redirección segura que Gmail guarda en el atributo data-saferedirecturl. El entrenamiento usó el mismo extractor, así que el comportamiento es coherente con la evaluación, pero esas URL aparecen en la lista de indicadores sin ser maliciosas.",
+    "Los correos 01 y 02 tienen menos de 300 caracteres de texto plano. La interfaz solo muestra el aviso de texto corto cuando el correo se pega como texto, porque con un archivo .eml no conoce la longitud hasta que la API lo procesa.",
+    "Las URL de la lista de indicadores conservan la dirección del destinatario en la cadena de consulta; el defanging cubre URL e IPv4, no direcciones de correo."
+  ]
+}

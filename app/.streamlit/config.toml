@@ -1,0 +1,17 @@
+# Configuración de Streamlit. Se definen una variante clara y una oscura del tema: la interfaz
+# sigue la preferencia del sistema operativo o del navegador.
+[theme.light]
+primaryColor = "#2a78d6"
+
+[theme.dark]
+primaryColor = "#3987e5"
+
+[server]
+headless = true
+maxUploadSize = 2
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "viewer"
