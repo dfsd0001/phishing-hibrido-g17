@@ -97,6 +97,18 @@ TEXTOS = {
         "estado_ok": "API disponible",
         "estado_cargando": "La API responde, pero el modelo aún se está cargando",
         "estado_caido": "La API no responde",
+        "estado_ok_nube": "Modelo disponible",
+        "estado_cargando_nube": (
+            "Cargando el modelo. En la primera visita tarda unos minutos; después pulse Analizar de nuevo."
+        ),
+        "estado_sin_modelo": "No se pudo cargar el modelo. Avise al equipo del proyecto.",
+        "inferencia_nube": "demostración en la nube",
+        "privacidad_nube": (
+            "Demostración pública alojada en Streamlit Community Cloud (servidores en Estados Unidos). El correo se "
+            "analiza en memoria y no se guarda, pero no pegue correos reales con datos personales: use los "
+            "ejemplos o correos de prueba."
+        ),
+        "error_limite": "Llegó al límite de {n} análisis de esta sesión de demostración.",
         "privacidad": (
             "El correo se envía solo a la API del detector, que no lo guarda. El historial existe únicamente en "
             "esta sesión del navegador y se borra al cerrarla."
@@ -277,6 +289,18 @@ Soporte: repositorio del proyecto en GitHub (sección *Issues*).
         "estado_ok": "API available",
         "estado_cargando": "The API responds, but the model is still loading",
         "estado_caido": "The API is not responding",
+        "estado_ok_nube": "Model available",
+        "estado_cargando_nube": (
+            "Loading the model. The first visit takes a few minutes; then press Analyze again."
+        ),
+        "estado_sin_modelo": "The model could not be loaded. Please notify the project team.",
+        "inferencia_nube": "cloud demo",
+        "privacidad_nube": (
+            "Public demo hosted on Streamlit Community Cloud (servers in the United States). The email is analyzed "
+            "in memory and not stored, but do not paste real emails with personal data: use the examples or "
+            "test emails."
+        ),
+        "error_limite": "You reached the limit of {n} analyses for this demo session.",
         "privacidad": (
             "The email is sent only to the detector API, which does not store it. The history exists only in "
             "this browser session and is deleted when it ends."

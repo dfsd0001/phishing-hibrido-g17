@@ -97,7 +97,8 @@ de Stakeholders de la Semana 1. El impacto sobre cada grupo se analiza en
 * Idiomas distintos del inglés y del español: se marcan para revisión manual.
 * Acciones automáticas sobre buzones (purga, bloqueo) o cierre automático de alertas: el sistema
   sugiere y el analista decide.
-* Operación en producción con correo real de una organización.
+* Operación en producción con correo real de una organización. La demostración pública en la nube
+  existe para la evaluación y se usa solo con ejemplos o correos de prueba.
 
 ## 6. Metodología de trabajo
 
@@ -177,6 +178,7 @@ se alojan en un repositorio privado de Hugging Face Hub, también gratuito.
 | Ampliación del alcance | Entró la ruta en español | Ruta separada, con métricas y limitaciones propias, sin mover las metas del inglés |
 | Desempeño bajo la meta | Las metas se cumplieron en la partición aleatoria, pero el correo corporativo mostró 12,5 % de falsos positivos | Umbral operativo elegido en una mitad de los datos y reportado en la otra (D27) |
 | Infraestructura de inferencia | Hugging Face Spaces dejó de ofrecer contenedores gratuitos (respuesta 402 al crear el Space) | API en un contenedor local dentro de la red del SOC (D12); los correos no salen de la organización |
+| URL pública para la evaluación (requisito agregado en la semana 6) | Hugging Face Spaces exige PRO y Render ofrece 512 MB de RAM | Demostración en Streamlit Community Cloud con el modelo dentro de la interfaz (D32) |
 | Licencia del gestor de casos | TheHive exige una licencia validada por su fabricante | DFIR-IRIS, libre y sin licencia, declarado en la Ficha de la Semana 2 |
 
 ## 10. Coherencia con los entregables anteriores

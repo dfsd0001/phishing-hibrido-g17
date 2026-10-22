@@ -1,0 +1,17 @@
+# Configuración de Streamlit para la demostración en Streamlit Community Cloud, que solo lee este
+# archivo de la raíz. Es la misma de app/.streamlit/config.toml: tema claro y oscuro.
+[theme.light]
+primaryColor = "#2a78d6"
+
+[theme.dark]
+primaryColor = "#3987e5"
+
+[server]
+headless = true
+maxUploadSize = 2
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "viewer"

@@ -13,6 +13,8 @@ integración con herramientas de un centro de operaciones de seguridad (n8n, DFI
 Proyecto Integrador de la Maestría en Inteligencia Artificial (MIAR0545), Universidad de
 Especialidades Espíritu Santo (UEES). Grupo 17, octubre de 2026.
 
+**Demostración en línea:** https://phishing-hibrido-g17.streamlit.app
+
 ## Tabla de contenidos
 
 1. [Descripción del problema](#descripción-del-problema)
@@ -228,9 +230,13 @@ Aplicación web en Streamlit que consulta la API. Permite:
 
 ![Interfaz en inglés con tema oscuro](docs/capturas/09_ingles_tema_oscuro.png)
 
-**Acceso.** La interfaz se ejecuta en local (`http://localhost:8501`, ver la sección anterior). No se
-publica en internet a propósito: una instancia pública serviría para que un atacante probara sus correos
-hasta evadir el detector. Guía completa con capturas anotadas: [docs/manual_usuario.md](docs/manual_usuario.md).
+**Demostración en línea: [phishing-hibrido-g17.streamlit.app](https://phishing-hibrido-g17.streamlit.app)**. Es la misma interfaz con el modelo cargado dentro de
+la aplicación, en Streamlit Community Cloud. Úsela con los ejemplos o con correos de prueba: los
+servidores están en Estados Unidos. La primera visita después de un periodo sin uso tarda unos minutos
+mientras se carga el modelo. Cómo se publica y con qué límites: [nube/README.md](nube/README.md).
+
+La interfaz también se ejecuta en local (`http://localhost:8501`, ver la sección anterior), conectada a
+la API y al SOC. Guía completa con capturas anotadas: [docs/manual_usuario.md](docs/manual_usuario.md).
 
 ## Estructura del proyecto
 
@@ -244,6 +250,7 @@ phishing-hibrido-g17/
 ├── models/          Ficha del modelo y manifiesto; los pesos están en Hugging Face Hub (privado)
 ├── app/             Interfaz web en Streamlit, con su Dockerfile y dependencias
 ├── api/             Servicio de inferencia en FastAPI
+├── nube/            Punto de entrada y dependencias de la demostración en Streamlit Community Cloud
 ├── contracts/       Contrato JSON v1.2 (JSON Schema) y ejemplos de referencia
 ├── deploy/          docker-compose, flujo de n8n, reglas de Wazuh y scripts de los KPI de integración
 ├── tests/           Pruebas automáticas
@@ -268,8 +275,9 @@ phishing-hibrido-g17/
   idioma. La brecha más importante es la del español: 3,5 % de falsos positivos frente a 1,3 % en
   inglés. El análisis por subgrupos con Fairlearn (corpus, longitud, URL y antigüedad) queda dentro de
   los límites fijados.
-* **Privacidad.** La inferencia corre en la infraestructura propia; la respuesta no incluye el cuerpo
-  del correo; la API no guarda los correos; los datos de entrenamiento no se redistribuyen.
+* **Privacidad.** En el despliegue local la inferencia corre en la infraestructura propia; la
+  respuesta no incluye el cuerpo del correo; la API no guarda los correos; los datos de entrenamiento
+  no se redistribuyen. La demostración pública se usa solo con ejemplos o correos de prueba.
 * **Seguridad.** Ninguna URL se resuelve ni se visita; todos los indicadores salen defangeados y la API
   bloquea cualquier respuesta con un indicador vivo.
 * **Supervisión humana.** El sistema sugiere y el analista decide: ningún correo se cierra, borra ni
@@ -281,7 +289,8 @@ visto (7,6 %). No analiza adjuntos, imágenes ni encabezados de autenticación. 
 español.
 
 **Usos no permitidos.** Escanear buzones sin base legal, evaluar o sancionar empleados, automatizar
-bloqueos sin revisión humana, exponer la API a internet o usarla para afinar campañas de phishing.
+bloqueos sin revisión humana, exponer la API del SOC a internet o usar la demostración para afinar
+campañas de phishing.
 
 Análisis completo de los ocho puntos: [docs/consideraciones_eticas.md](docs/consideraciones_eticas.md).
 

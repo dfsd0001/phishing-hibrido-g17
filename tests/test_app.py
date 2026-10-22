@@ -16,13 +16,14 @@ from streamlit.testing.v1 import AppTest
 
 from src.ioc_utils import iocs_vivos, urls_para_features
 from src.url_features import descomponer
-from tests.simulados import RAIZ
+from tests.simulados import RAIZ, VALIDADOR, detector_bilingue
 
 CARPETA_APP = RAIZ / "app"
 sys.path.insert(0, str(CARPETA_APP))
 
 import cliente_api  # noqa: E402
 import contenido  # noqa: E402
+import motor_local  # noqa: E402
 
 RESPUESTA = json.loads((RAIZ / "contracts" / "golden" / "phishing.json").read_text(encoding="utf-8"))
 CONFIG = cliente_api.Configuracion(url="http://api.test", clave="clave-prueba", timeout=5)
@@ -222,3 +223,73 @@ def test_cambio_a_ingles(interfaz):
     interfaz.run()
     interfaz.radio(key="idioma_interfaz").set_value("English").run()
     assert interfaz.title[0].value == "Hybrid phishing detector"
+
+
+# Demostración en la nube: el detector se carga dentro de la interfaz (modo local)
+
+CONFIG_LOCAL = cliente_api.Configuracion(url="", clave="", timeout=5, modo="local")
+
+
+@pytest.fixture
+def motor():
+    yield motor_local
+    motor_local.reiniciar_para_pruebas(None)
+
+
+def test_modo_local_analiza_con_el_detector_y_cumple_el_contrato(motor):
+    motor.reiniciar_para_pruebas(detector_bilingue())
+    assert cliente_api.estado_servicio(CONFIG_LOCAL)["estado"] == "ok"
+    salida = cliente_api.analizar(
+        "Account suspended", "Verify your password at hxxps[://]secure-login[.]example[.]com/verify",
+        configuracion=CONFIG_LOCAL,
+    )
+    VALIDADOR.validate(salida)
+    assert salida["ruta_modelo"] == "en_v3"
+    assert not iocs_vivos(json.dumps(salida))
+
+
+def test_modo_local_sin_modelo_cargado_se_explica(motor):
+    motor.reiniciar_para_pruebas(None)
+    motor_local._estado["hilo"] = object()  # carga en curso
+    assert cliente_api.estado_servicio(CONFIG_LOCAL)["estado"] == "cargando"
+    with pytest.raises(cliente_api.ErrorAPI) as error:
+        cliente_api.analizar("Asunto", "Cuerpo", configuracion=CONFIG_LOCAL)
+    assert error.value.codigo == "modelo_no_disponible"
+
+
+def test_modo_local_fallo_de_carga(motor):
+    motor.reiniciar_para_pruebas(None)
+
+    def cargador_fallido():
+        raise OSError("sin acceso al repositorio")
+
+    motor.iniciar_carga(cargador_fallido)
+    motor_local._estado["hilo"].join(timeout=10)
+    estado = motor.estado()
+    assert estado["estado"] == "sin_modelo"
+    assert estado["error_carga"] == "OSError"
+
+
+def test_demo_en_la_nube_limita_los_analisis_por_sesion(interfaz, monkeypatch):
+    monkeypatch.setenv("G17_MODO", "local")
+    monkeypatch.setenv("G17_LIMITE_SESION", "1")
+    monkeypatch.setattr(cliente_api, "analizar", lambda *a, **k: copy.deepcopy(RESPUESTA))
+    interfaz.run()
+    assert any("Streamlit Community Cloud" in str(c.value) for c in interfaz.caption)
+    interfaz.button[0].click().run()
+    interfaz.button[1].click().run()
+    assert len(interfaz.session_state["historial"]) == 1
+    interfaz.button[1].click().run()
+    assert any("límite de 1 análisis" in e.value for e in interfaz.error)
+    assert len(interfaz.session_state["historial"]) == 1
+
+
+def test_punto_de_entrada_de_la_nube(monkeypatch):
+    for variable, valor in {"G17_MODO": "local", "UMBRAL_EN": "0.8586", "G17_LIMITE_SESION": "30"}.items():
+        monkeypatch.setenv(variable, valor)
+    monkeypatch.setattr(cliente_api, "estado_servicio", lambda *a, **k: {"estado": "cargando"})
+    prueba = AppTest.from_file(str(RAIZ / "nube" / "streamlit_app.py"), default_timeout=30)
+    prueba.run()
+    assert not prueba.exception
+    assert prueba.title[0].value == "Detector híbrido de phishing"
+    assert any("Cargando el modelo" in w.value for w in prueba.warning)

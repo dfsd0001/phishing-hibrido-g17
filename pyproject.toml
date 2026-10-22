@@ -41,7 +41,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["src", "api", "app", "contracts", "deploy", "tests", "cliente_api", "contenido"]
+known-first-party = ["src", "api", "app", "contracts", "deploy", "tests", "cliente_api", "contenido", "motor_local"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["PLR2004", "N802"]

@@ -2,7 +2,8 @@
 
 Entorno de demostración del detector integrado con un SOC: API de inferencia, interfaz web, n8n,
 DFIR-IRIS y Wazuh, todos en contenedores en el mismo equipo. Ningún servicio se expone a internet: los
-puertos se publican solo en `127.0.0.1` y la red `soc` es interna.
+puertos se publican solo en `127.0.0.1` y la red `soc` es interna. La demostración pública de la
+interfaz, sin la integración con el SOC, se describe en `nube/README.md`.
 
 | Servicio | Versión | Dirección local | Función |
 |---|---|---|---|

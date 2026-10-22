@@ -31,7 +31,9 @@ HOSTS_PERMITIDOS = re.compile(
         |raw\.githubusercontent\.com|spdp\.gob\.ec|eur-lex\.europa\.eu|nist\.gov|www\.nist\.gov
         |dl\.acm\.org|ieeexplore\.ieee\.org|docs\.docker\.com|pypi\.org|w3\.org|www\.w3\.org
         |colab\.research\.google\.com|api\.github\.com|codeload\.github\.com|monkey\.org
-        |nlp\.stanford\.edu|download\.pytorch\.org|malware-traffic-analysis\.net)
+        |nlp\.stanford\.edu|download\.pytorch\.org|malware-traffic-analysis\.net|render\.com
+        |discuss\.huggingface\.co)
+      | (.+\.)?streamlit\.(io|app)
     )$""",
     re.VERBOSE,
 )

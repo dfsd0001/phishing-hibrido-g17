@@ -1,11 +1,14 @@
 """Cliente de la API del detector para la interfaz.
 
-La interfaz no carga los modelos: envía el correo a la API (``POST /v1/analizar``) y muestra el
-contrato JSON que recibe. Así la interfaz y la integración con el SOC usan exactamente el mismo
-servicio. Los errores se traducen a una excepción con un código que la interfaz explica al
-usuario; el texto del correo nunca se registra.
+En el despliegue local, la interfaz no carga los modelos: envía el correo a la API
+(``POST /v1/analizar``) y muestra el contrato JSON que recibe. Así la interfaz y la integración con
+el SOC usan exactamente el mismo servicio. En la demostración pública en la nube (modo ``local``) el
+mismo detector se carga dentro de la interfaz (``motor_local``) y la salida sigue el mismo contrato.
+Los errores se traducen a una excepción con un código que la interfaz explica al usuario; el texto
+del correo nunca se registra.
 
 Variables de entorno:
+    G17_MODO      ``api`` (por defecto) o ``local``.
     G17_API_URL   Dirección de la API (por defecto ``http://localhost:8000``).
     G17_API_KEY   Clave de la API (cabecera ``X-API-Key``).
     G17_TIMEOUT   Tiempo máximo de espera en segundos (por defecto 60).
@@ -45,6 +48,7 @@ class Configuracion:
     url: str
     clave: str
     timeout: float
+    modo: str = "api"
 
     @classmethod
     def desde_entorno(cls) -> Configuracion:
@@ -52,6 +56,7 @@ class Configuracion:
             url=os.getenv("G17_API_URL", "http://localhost:8000").rstrip("/"),
             clave=os.getenv("G17_API_KEY", ""),
             timeout=float(os.getenv("G17_TIMEOUT", "60")),
+            modo=os.getenv("G17_MODO", "api").strip().lower(),
         )
 
 
@@ -84,6 +89,10 @@ def estado_servicio(
 ) -> dict | None:
     """Respuesta de ``GET /salud`` o ``None`` si la API no responde."""
     configuracion = configuracion or Configuracion.desde_entorno()
+    if configuracion.modo == "local":
+        import motor_local
+
+        return motor_local.estado()
     try:
         with _cliente(configuracion, transporte) as cliente:
             respuesta = cliente.get("/salud", timeout=5)
@@ -112,6 +121,10 @@ def analizar(
         ErrorAPI: Con el código del problema.
     """
     configuracion = configuracion or Configuracion.desde_entorno()
+    if configuracion.modo == "local":
+        import motor_local
+
+        return motor_local.analizar(asunto, cuerpo, eml, ErrorAPI)
     if eml is not None:
         cuerpo_solicitud = {"eml_base64": base64.b64encode(eml).decode("ascii")}
     else:

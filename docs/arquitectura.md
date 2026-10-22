@@ -259,6 +259,14 @@ Hub con un token de solo lectura, los deja en un volumen y precalienta ambas rut
 primera inferencia sin precalentar tardaba 8,9 s; después del calentamiento, el percentil 95 de punta a
 punta es de 275 ms. Las instrucciones paso a paso están en [`deploy/README.md`](../deploy/README.md).
 
+**Demostración pública.** Para que la interfaz se pueda evaluar en remoto, se publica además en
+Streamlit Community Cloud (https://phishing-hibrido-g17.streamlit.app). Allí no hay API aparte: el punto de entrada
+`nube/streamlit_app.py` ejecuta la misma interfaz en modo `local`, y `app/motor_local.py` carga el mismo
+detector desde Hugging Face Hub (con el token guardado como secreto de la plataforma), lo precalienta en
+un hilo aparte y valida cada salida contra el contrato v1.2. Es la única plataforma gratuita con
+memoria suficiente para los dos DistilBERT (hasta 2,7 GB); Hugging Face Spaces exige PRO para
+contenedores en CPU y Render ofrece 512 MB. Detalle en [`nube/README.md`](../nube/README.md).
+
 **Medidas de seguridad del despliegue**
 
 * La API exige una clave y responde 401 sin ella; la clave se lee de variables de entorno y nunca se

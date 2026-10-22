@@ -1,0 +1,19 @@
+# Dependencias de la demostración en Streamlit Community Cloud: inferencia en CPU e interfaz.
+# PyTorch se instala en su variante para CPU desde la página de paquetes de PyTorch; el resto, desde
+# PyPI. Las versiones son las del servicio de inferencia (api/requirements.txt), con las que se
+# guardaron los artefactos del modelo.
+--find-links https://download.pytorch.org/whl/cpu/torch/
+torch==2.11.0+cpu
+transformers==5.17.0
+scikit-learn==1.6.1
+xgboost==3.4.1
+numpy==2.1.3
+scipy==1.16.3
+pandas==2.2.3
+joblib==1.6.0
+jsonschema==4.26.0
+huggingface_hub==1.31.0
+langdetect==1.0.9
+streamlit==1.66.0
+httpx==0.28.1
+altair==6.3.0

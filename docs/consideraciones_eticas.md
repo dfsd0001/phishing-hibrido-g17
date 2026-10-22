@@ -84,6 +84,7 @@ pueden incluir datos de terceros.
 | Medida | Dónde |
 |---|---|
 | La inferencia corre en un contenedor de la propia organización; los correos no salen de su red | `deploy/docker-compose.yml`, decisión D12 |
+| La demostración pública (Streamlit Community Cloud, servidores en Estados Unidos) advierte en pantalla que solo se usen ejemplos o correos de prueba; no se debe usar con correo real de una organización | `nube/README.md`, decisión D32 |
 | El repositorio de modelos (privado) guarda solo artefactos, nunca correos | Hugging Face Hub, versión `v2` |
 | La respuesta no incluye el cuerpo del correo: solo su huella SHA-256, el asunto defangeado (300 caracteres como máximo), los indicadores y los puntajes | Contrato JSON v1.2 |
 | La API no guarda los correos y la interfaz guarda el historial solo en la sesión del navegador, que se borra al cerrarla | `api/app.py`, `app/app.py` |
@@ -218,6 +219,11 @@ mientras se investiga.
   lectura y no se publican.
 * La API exige una clave, corre en una red interna y publica su puerto solo en `127.0.0.1`. El puntaje
   nunca se devuelve al remitente del correo.
+* La evaluación del proyecto exige una URL pública, así que la interfaz se publica como demostración
+  en Streamlit Community Cloud (decisión D32). Allí los pesos siguen privados (la aplicación los lee
+  con un token de solo lectura guardado como secreto), cada sesión admite 30 análisis y la integración
+  con el SOC no se publica. El límite por sesión es una fricción, no una barrera: el riesgo de uso como
+  oráculo se reduce pero no desaparece, y la demostración se puede suspender al terminar la evaluación.
 * Los indicadores siempre salen defangeados y la API bloquea cualquier respuesta con un indicador vivo,
   de modo que la herramienta no difunde enlaces maliciosos.
 * El código se publica con licencia MIT; los datos de terceros conservan sus propias licencias (por
@@ -229,7 +235,8 @@ mientras se investiga.
   legal.
 * Evaluar, puntuar o sancionar a empleados.
 * Cerrar casos, borrar correos o bloquear remitentes de forma automática a partir del puntaje.
-* Exponer la API a internet o a usuarios no autenticados.
+* Exponer la API del SOC a internet o a usuarios no autenticados.
+* Analizar en la demostración pública correos reales con datos personales.
 * Usar la herramienta para probar y afinar campañas de phishing.
 
 ## 8. Limitaciones reconocidas

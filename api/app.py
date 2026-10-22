@@ -25,7 +25,6 @@ from __future__ import annotations
 import base64
 import binascii
 import hmac
-import json
 import logging
 import os
 import sys
@@ -41,23 +40,15 @@ RAIZ = Path(__file__).resolve().parents[1]
 if str(RAIZ) not in sys.path:
     sys.path.insert(0, str(RAIZ))
 
+from src import despliegue  # noqa: E402
 from src import model as modelo  # noqa: E402
 
 log = logging.getLogger("g17.api")
 VERSION_API = "1.1"
-ESQUEMA = RAIZ / "contracts" / "contrato_v1.schema.json"
-
-# Correos de calentamiento: la primera inferencia de cada ruta tarda varios segundos por la
-# carga perezosa de los modelos. Se paga al arrancar el servicio y no en la primera consulta.
-CALENTAMIENTO = (
-    ("Weekly report", "Hi team, the weekly report is attached."),
-    ("Informe semanal", "Hola equipo, adjunto el informe semanal del proyecto."),
-)
-
-
-def _validador_contrato() -> jsonschema.Draft202012Validator:
-    esquema = json.loads(ESQUEMA.read_text(encoding="utf-8"))
-    return jsonschema.Draft202012Validator(esquema, format_checker=jsonschema.FormatChecker())
+# Se conservan estos nombres para las pruebas y para quien importe el módulo.
+CALENTAMIENTO = despliegue.CALENTAMIENTO
+_validador_contrato = despliegue.validador_contrato
+cargar_detector_desde_hub = despliegue.cargar_detector_desde_hub
 
 
 class Solicitud(BaseModel):
@@ -72,22 +63,6 @@ class Solicitud(BaseModel):
         if (self.cuerpo is None) == (self.eml_base64 is None):
             raise ValueError("Envíe 'cuerpo' (con 'asunto' opcional) o 'eml_base64', pero no ambos")
         return self
-
-
-def cargar_detector_desde_hub() -> modelo.Detector:
-    """Descarga los artefactos de la versión indicada y construye el detector."""
-    from huggingface_hub import snapshot_download
-
-    ruta = snapshot_download(
-        repo_id=os.environ["MODEL_REPO"],
-        revision=os.getenv("MODEL_REVISION", "v2"),
-        token=os.getenv("HF_TOKEN") or None,
-    )
-    dominios = tuple(d.strip() for d in os.getenv("DOMINIOS_PROPIOS", "").split(",") if d.strip())
-    umbral = os.getenv("UMBRAL_EN", "").strip()
-    return modelo.Detector.desde_directorio(
-        ruta, dominios_propios=dominios, umbral_en=float(umbral) if umbral else None
-    )
 
 
 def crear_app(detector=None, api_key: str | None = None, cargador=cargar_detector_desde_hub) -> FastAPI:
@@ -106,11 +81,7 @@ def crear_app(detector=None, api_key: str | None = None, cargador=cargar_detecto
             inicio = time.time()
             try:
                 estado["detector"] = cargador()
-                for asunto, cuerpo in CALENTAMIENTO:
-                    try:
-                        estado["detector"].analizar(asunto, cuerpo)
-                    except Exception:
-                        log.warning("Calentamiento fallido; el servicio continúa")
+                despliegue.calentar(estado["detector"])
             except Exception as error:
                 # El servicio responde 503 en lugar de terminar.
                 estado["error_carga"] = type(error).__name__

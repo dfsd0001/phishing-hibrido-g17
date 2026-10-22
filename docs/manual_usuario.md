@@ -9,7 +9,19 @@ el correo se revisa a mano.
 
 ## 1. Acceso a la interfaz
 
-La interfaz forma parte del despliegue local del proyecto. Con el entorno levantado (instrucciones en
+**Demostración en línea.** La forma más rápida de probarla es abrir **https://phishing-hibrido-g17.streamlit.app** en el
+navegador. No hace falta instalar nada. Tenga en cuenta que:
+
+* la primera visita después de un periodo sin uso tarda unos minutos: si aparece el botón *Yes, get
+  this app back up!*, púlselo; luego la barra lateral muestra *Cargando el modelo* hasta que cambia a
+  *Modelo disponible*;
+* los servidores están en Estados Unidos: use los ejemplos o correos de prueba, nunca correos reales
+  con datos personales;
+* cada sesión admite 30 análisis;
+* la demostración no incluye la integración con n8n, DFIR-IRIS y Wazuh.
+
+**Despliegue local.** La interfaz también forma parte del despliegue local del proyecto. Con el entorno
+levantado (instrucciones en
 [`deploy/README.md`](../deploy/README.md)), se abre en el navegador:
 
 ```

@@ -4,14 +4,19 @@ Ejecución local, con la API levantada (ver deploy/README.md):
 
     G17_API_URL=http://localhost:8000 G17_API_KEY=<clave> streamlit run app/app.py
 
-La interfaz no carga modelos: consulta la API, que devuelve el contrato JSON v1.2. Todo lo que
-muestra (asunto, URL e IP) llega ya defangeado desde la API.
+En ese modo la interfaz no carga modelos: consulta la API, que devuelve el contrato JSON v1.2. En la
+demostración pública (``nube/streamlit_app.py``, modo ``local``) el mismo detector se carga dentro de
+la interfaz. En ambos casos todo lo que se muestra (asunto, URL e IP) llega ya defangeado.
+
+Variable de entorno adicional:
+    G17_LIMITE_SESION   Análisis permitidos por sesión (0 = sin límite; la demostración usa 30).
 """
 
 from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 from pathlib import Path
 
 import altair as alt
@@ -33,14 +38,31 @@ st.markdown(f"<style>{(CARPETA / 'assets' / 'estilo.css').read_text(encoding='ut
 
 
 def iniciar_estado() -> None:
-    valores = {"historial": [], "ultimo": None, "asunto": "", "cuerpo": "", "aviso_corto": False}
+    valores = {"historial": [], "ultimo": None, "asunto": "", "cuerpo": "", "aviso_corto": False, "n_analisis": 0}
     for clave, valor in valores.items():
         st.session_state.setdefault(clave, valor)
 
 
+def en_la_nube() -> bool:
+    """La demostración pública carga el modelo dentro de la interfaz (modo ``local``)."""
+    return cliente_api.Configuracion.desde_entorno().modo == "local"
+
+
+def limite_sesion() -> int:
+    try:
+        return max(0, int(os.getenv("G17_LIMITE_SESION", "0")))
+    except ValueError:
+        return 0
+
+
 @st.cache_data(ttl=30, show_spinner=False)
-def estado_servicio() -> dict | None:
+def _estado_api() -> dict | None:
     return cliente_api.estado_servicio()
+
+
+def estado_servicio() -> dict | None:
+    # En la nube el estado se lee en memoria y cambia al terminar la carga: no se guarda en caché.
+    return cliente_api.estado_servicio() if en_la_nube() else _estado_api()
 
 
 def idioma_actual() -> str:
@@ -70,17 +92,23 @@ def barra_lateral(t: dict) -> None:
         st.radio(t["idioma"], ["Español", "English"], key="idioma_interfaz", horizontal=True)
         st.subheader(t["estado"])
         salud = estado_servicio()
+        nube = en_la_nube()
         if salud is None:
             st.error(t["estado_caido"])
+        elif salud.get("estado") == "cargando":
+            st.warning(t["estado_cargando_nube"])
+        elif salud.get("estado") != "ok" and nube:
+            st.error(t["estado_sin_modelo"])
         elif salud.get("estado") != "ok":
             st.warning(t["estado_cargando"])
         else:
-            st.success(t["estado_ok"])
-            detalle = f"{salud.get('modelo')} {salud.get('variante')} | API {salud.get('version_api')}"
+            st.success(t["estado_ok_nube" if nube else "estado_ok"])
+            servicio = f"API {salud['version_api']}" if salud.get("version_api") else t["inferencia_nube"]
+            detalle = f"{salud.get('modelo')} {salud.get('variante')} | {servicio}"
             if salud.get("umbral_en") is not None:
                 detalle += f" | {t['umbral'].lower()} {salud['umbral_en']:.4f}"
             st.caption(detalle)
-        st.caption(t["privacidad"])
+        st.caption(t["privacidad_nube" if nube else "privacidad"])
 
 
 def tarjeta_veredicto(resultado: dict, t: dict) -> None:
@@ -184,6 +212,10 @@ def mostrar_resultado(resultado: dict, t: dict) -> None:
 def ejecutar_analisis(t: dict, archivo) -> None:
     eml = archivo.getvalue() if archivo is not None else None
     asunto, cuerpo = st.session_state["asunto"], st.session_state["cuerpo"]
+    limite = limite_sesion()
+    if limite and st.session_state["n_analisis"] >= limite:
+        st.error(t["error_limite"].format(n=limite))
+        return
     problemas = cliente_api.validar_entrada(asunto, cuerpo, eml)
     if problemas:
         for problema in problemas:
@@ -195,6 +227,7 @@ def ejecutar_analisis(t: dict, archivo) -> None:
         except cliente_api.ErrorAPI as error:
             st.error(t.get(f"error_{error.codigo}", t["error_error_servidor"]))
             return
+    st.session_state["n_analisis"] += 1
     st.session_state["aviso_corto"] = eml is None and len(f"{asunto} {cuerpo}".strip()) < LONGITUD_CORTA
     st.session_state["ultimo"] = resultado
     st.session_state["historial"].append({"hora": dt.datetime.now().strftime("%H:%M:%S"), "resultado": resultado})

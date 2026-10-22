@@ -16,9 +16,10 @@ Face Hub, versionados con etiquetas inmutables:
 3. **Uso dual.** Con los pesos, un atacante podría probar sus correos sin límite hasta evadir el
    detector. Mantenerlos privados reduce ese riesgo (ver `docs/consideraciones_eticas.md`, sección 7).
 
-**Acceso para evaluación.** El equipo entrega al docente, por un canal privado, un token de Hugging
-Face de **solo lectura** limitado a este repositorio. El token nunca se escribe en el código ni en este
-repositorio.
+**Acceso para evaluación.** La demostración pública (`nube/README.md`) ya usa el modelo, así que
+para probarlo no hace falta ningún token. Para reproducir el despliegue local, el equipo entrega por un
+canal privado un token de Hugging Face *Fine-grained* de **solo lectura**, limitado a este repositorio
+y revocable. El token nunca se escribe en el código ni en este repositorio.
 
 ## Descarga
 
