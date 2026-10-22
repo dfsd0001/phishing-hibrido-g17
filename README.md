@@ -13,7 +13,7 @@ integración con herramientas de un centro de operaciones de seguridad (n8n, DFI
 Proyecto Integrador de la Maestría en Inteligencia Artificial (MIAR0545), Universidad de
 Especialidades Espíritu Santo (UEES). Grupo 17, octubre de 2026.
 
-**Demostración en línea:** https://phishing-hibrido-g17.streamlit.app
+**Demostración en línea:** https://phishing-hibrido-g17-myyvrqmmvunvru7bg4yeou.streamlit.app
 
 ## Tabla de contenidos
 
@@ -230,7 +230,7 @@ Aplicación web en Streamlit que consulta la API. Permite:
 
 ![Interfaz en inglés con tema oscuro](docs/capturas/09_ingles_tema_oscuro.png)
 
-**Demostración en línea: [phishing-hibrido-g17.streamlit.app](https://phishing-hibrido-g17.streamlit.app)**. Es la misma interfaz con el modelo cargado dentro de
+**Demostración en línea: [abrir la aplicación](https://phishing-hibrido-g17-myyvrqmmvunvru7bg4yeou.streamlit.app)**. Es la misma interfaz con el modelo cargado dentro de
 la aplicación, en Streamlit Community Cloud. Úsela con los ejemplos o con correos de prueba: los
 servidores están en Estados Unidos. La primera visita después de un periodo sin uso tarda unos minutos
 mientras se carga el modelo. Cómo se publica y con qué límites: [nube/README.md](nube/README.md). La

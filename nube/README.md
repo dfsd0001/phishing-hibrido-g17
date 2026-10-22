@@ -1,6 +1,6 @@
 # Demostración pública en Streamlit Community Cloud
 
-La interfaz del detector se publica en **https://phishing-hibrido-g17.streamlit.app** para que se
+La interfaz del detector se publica en **https://phishing-hibrido-g17-myyvrqmmvunvru7bg4yeou.streamlit.app** para que se
 pueda probar desde cualquier navegador, sin instalar nada. Es la misma interfaz de `app/` y el mismo
 detector publicado (versión `v2`), con dos diferencias frente al despliegue local:
 
@@ -48,7 +48,7 @@ repositorio y elija *Create app*, *Deploy a public app from GitHub*:
 | Repository | `dfsd0001/phishing-hibrido-g17` |
 | Branch | `main` |
 | Main file path | `nube/streamlit_app.py` |
-| App URL | `phishing-hibrido-g17` |
+| App URL | La que propone la plataforma (la de esta demostración es la indicada al inicio) |
 
 **3. Configuración avanzada** (*Advanced settings*): Python 3.13 y, en *Secrets*. No elija Python 3.14:
 las versiones fijadas de NumPy, pandas y scikit-learn no publican paquetes precompilados para esa
