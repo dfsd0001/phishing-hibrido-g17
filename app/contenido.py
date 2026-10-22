@@ -191,7 +191,7 @@ TEXTOS = {
         "comparacion": "Comparación de los análisis de la sesión",
         "metrica": "Métrica",
         "valor": "Valor",
-        "hora": "Hora",
+        "hora": "Hora (UTC)",
         "nombres_clase": {"legitimo": "Legítimo", "spam": "Spam", "phishing": "Phishing"},
         "nombres_nivel": {"bajo": "Bajo", "medio": "Medio", "alto": "Alto", "critico": "Crítico"},
         "acerca": """
@@ -381,7 +381,7 @@ Soporte: repositorio del proyecto en GitHub (sección *Issues*).
         "comparacion": "Comparison of the session analyses",
         "metrica": "Metric",
         "valor": "Value",
-        "hora": "Time",
+        "hora": "Time (UTC)",
         "nombres_clase": {"legitimo": "Legitimate", "spam": "Spam", "phishing": "Phishing"},
         "nombres_nivel": {"bajo": "Low", "medio": "Medium", "alto": "High", "critico": "Critical"},
         "acerca": """

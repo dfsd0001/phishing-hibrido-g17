@@ -233,7 +233,9 @@ Aplicación web en Streamlit que consulta la API. Permite:
 **Demostración en línea: [phishing-hibrido-g17.streamlit.app](https://phishing-hibrido-g17.streamlit.app)**. Es la misma interfaz con el modelo cargado dentro de
 la aplicación, en Streamlit Community Cloud. Úsela con los ejemplos o con correos de prueba: los
 servidores están en Estados Unidos. La primera visita después de un periodo sin uso tarda unos minutos
-mientras se carga el modelo. Cómo se publica y con qué límites: [nube/README.md](nube/README.md).
+mientras se carga el modelo. Cómo se publica y con qué límites: [nube/README.md](nube/README.md). La
+verificación del 22/10/2026 (16 análisis entre 53 y 354 ms, mismos resultados que en el despliegue
+local) está en `results/metrics/demo_nube_v1.json`.
 
 La interfaz también se ejecuta en local (`http://localhost:8501`, ver la sección anterior), conectada a
 la API y al SOC. Guía completa con capturas anotadas: [docs/manual_usuario.md](docs/manual_usuario.md).

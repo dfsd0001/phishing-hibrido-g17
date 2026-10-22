@@ -1,0 +1,48 @@
+{
+  "descripcion": "Verificación de la demostración pública en Streamlit Community Cloud (decisión D32): instalación, carga del modelo desde el repositorio privado y 16 análisis desde el navegador. Prueba funcional, no evaluación del modelo: las métricas del modelo están en evaluacion_final.json.",
+  "fecha": "2026-10-22",
+  "entorno": {
+    "plataforma": "Streamlit Community Cloud, plan gratuito",
+    "punto_de_entrada": "nube/streamlit_app.py (modo local)",
+    "python": "3.13.17",
+    "torch": "2.11.0+cpu",
+    "dependencias": "nube/requirements.txt, instaladas con uv",
+    "artefactos": "dennysSalazar/g17-phishing-hibrido, etiqueta v2 (15 archivos)",
+    "umbral_phishing_en": 0.8586,
+    "umbral_phishing_es": 0.84689
+  },
+  "arranque": {
+    "fuente": "Registro de la plataforma (Manage app), hora UTC",
+    "inicio_despliegue": "22:13:32",
+    "dependencias_instaladas": "22:13:55",
+    "servidor_iniciado": "22:13:57",
+    "descarga_iniciada_con_la_primera_visita": "22:14:09",
+    "pesos_cargados": "22:14:32",
+    "errores_de_memoria": 0,
+    "nota": "Los dos registros 'Loading weights 104/104' corresponden al DistilBERT inglés y al multilingüe. Un primer intento falló con 401 Unauthorized porque la aplicación se había recreado sin el secreto HF_TOKEN; se corrigió guardando el secreto y reiniciando la aplicación."
+  },
+  "analisis": {
+    "fuente": "Historial exportado en CSV desde la interfaz y capturas de pantalla",
+    "total": 16,
+    "entradas_distintas": 8,
+    "entradas": [
+      {"entrada": "Ejemplo: phishing en inglés (suplantación bancaria)", "repeticiones": 2, "clase": "phishing", "riesgo": 97, "ruta": "en_v3", "latencias_ms": [102, 77]},
+      {"entrada": "Ejemplo: legítimo en inglés (acta de reunión)", "repeticiones": 2, "clase": "legitimo", "riesgo": 0, "ruta": "en_v3", "latencias_ms": [53, 55]},
+      {"entrada": "Ejemplo: spam en inglés (oferta comercial)", "repeticiones": 2, "clase": "spam", "riesgo": 4, "ruta": "en_v3", "latencias_ms": [81, 100]},
+      {"entrada": "Ejemplo: phishing en español (bloqueo de cuenta)", "repeticiones": 2, "clase": "phishing", "riesgo": 98, "ruta": "es_v1", "latencias_ms": [90, 110]},
+      {"entrada": "Ejemplo: otro idioma (francés)", "repeticiones": 2, "clase": "spam", "riesgo": 82, "ruta": "en_v3", "latencias_ms": [174, 203], "nota": "Idioma detectado fr: la salida marca revisión manual y la interfaz advierte que el resultado no es fiable. La probabilidad de phishing (0,82) no alcanza el umbral, por eso la clase es spam con riesgo alto; es el comportamiento documentado en models/README.md."},
+      {"entrada": "Archivo .eml: 2020-05-05-phishing-email-example-04.eml (validacion_externa_mta.json)", "repeticiones": 1, "clase": "phishing", "riesgo": 100, "ruta": "en_v3", "latencias_ms": [140], "probabilidades_pct": {"legitimo": 0.0, "spam": 0.1, "phishing": 99.9}, "nota": "Mismo resultado que en el despliegue local del 20/10/2026: clase, riesgo y probabilidades idénticos."},
+      {"entrada": "Archivo .eml de otro correo del mismo conjunto de malware-traffic-analysis.net", "repeticiones": 1, "clase": "phishing", "riesgo": 98, "ruta": "en_v3", "latencias_ms": [98]},
+      {"entrada": "Archivo .eml: boletín comercial legítimo en español recibido por un integrante del equipo (no se publica porque contiene datos personales)", "repeticiones": 4, "clase": "legitimo", "riesgo": 8, "ruta": "es_v1", "latencias_ms": [180, 188, 168, 354], "probabilidades_pct": {"legitimo": 92.2, "spam": 0.0, "phishing": 7.8}, "ramas_pct_phishing": {"distilbert_multilingue": 0.1, "url_maximo": 99.8}, "nota": "La rama URL, sola, lo habría marcado como phishing (enlaces de seguimiento, fuentes CSS y píxel de apertura); la fusión lo clasifica como legítimo porque el texto pesa más. Es un solo caso y se registra como hallazgo H5, no como métrica."}
+    ],
+    "latencia_ms": {"minimo": 53, "mediana": 106, "maximo": 354, "nota": "Tiempo de análisis dentro de la aplicación, sin la red entre el navegador y el servidor. Con 16 mediciones no se reporta un percentil 95."},
+    "determinismo": "Las entradas repetidas dieron la misma clase y el mismo riesgo en todas sus repeticiones.",
+    "contrato": "Todas las salidas se validaron contra el esquema del contrato v1.2 dentro de la aplicación (app/motor_local.py); ninguna falló.",
+    "defanging": "Todos los indicadores de las capturas salen defangeados. El alcance del defanging es el esquema y el dominio de URL e IPv4: una dirección de correo dentro de los parámetros de una URL se muestra tal cual."
+  },
+  "no_demostrado": [
+    "Comportamiento con varios usuarios simultáneos.",
+    "Consumo de memoria exacto: la plataforma no lo muestra; solo consta que no hubo reinicios por memoria.",
+    "Tiempo de reactivación después de la suspensión por 12 horas sin visitas."
+  ]
+}

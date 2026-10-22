@@ -45,8 +45,8 @@ deploy/
 ## Requisitos
 
 * Docker Engine o Docker Desktop con Docker Compose v2.
-* Un token de **solo lectura** de Hugging Face con acceso al repositorio privado de modelos (ver
-  `models/README.md`).
+* Un token de **solo lectura** de Hugging Face con acceso al repositorio privado de modelos, propio de
+  quien despliega (ver `models/README.md`).
 * Git, para descargar DFIR-IRIS.
 
 ## A. DFIR-IRIS

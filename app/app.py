@@ -230,7 +230,8 @@ def ejecutar_analisis(t: dict, archivo) -> None:
     st.session_state["n_analisis"] += 1
     st.session_state["aviso_corto"] = eml is None and len(f"{asunto} {cuerpo}".strip()) < LONGITUD_CORTA
     st.session_state["ultimo"] = resultado
-    st.session_state["historial"].append({"hora": dt.datetime.now().strftime("%H:%M:%S"), "resultado": resultado})
+    hora_utc = dt.datetime.now(dt.UTC).strftime("%H:%M:%S")
+    st.session_state["historial"].append({"hora": hora_utc, "resultado": resultado})
 
 
 def pestana_analizar(t: dict) -> None:

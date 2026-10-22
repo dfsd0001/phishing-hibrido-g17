@@ -36,7 +36,9 @@ salen defangeados y ninguna URL se resuelve ni se visita.
 **1. Token de Hugging Face.** El repositorio de modelos es privado. En
 `huggingface.co/settings/tokens`, cree un token *Fine-grained* con un único permiso: lectura del
 contenido de `dennysSalazar/g17-phishing-hibrido`. Ese token solo puede leer ese repositorio y se puede
-revocar en cualquier momento.
+revocar en cualquier momento. Cada persona y cada despliegue usa su propio token, con un nombre que
+identifique a quién pertenece; un token nunca se comparte entre integrantes ni se escribe en el
+repositorio, y todos se revocan al terminar la evaluación del proyecto.
 
 **2. Crear la aplicación.** En `share.streamlit.io`, inicie sesión con la cuenta de GitHub dueña del
 repositorio y elija *Create app*, *Deploy a public app from GitHub*:
@@ -48,7 +50,9 @@ repositorio y elija *Create app*, *Deploy a public app from GitHub*:
 | Main file path | `nube/streamlit_app.py` |
 | App URL | `phishing-hibrido-g17` |
 
-**3. Configuración avanzada** (*Advanced settings*): Python 3.13 y, en *Secrets*:
+**3. Configuración avanzada** (*Advanced settings*): Python 3.13 y, en *Secrets*. No elija Python 3.14:
+las versiones fijadas de NumPy, pandas y scikit-learn no publican paquetes precompilados para esa
+versión, la plataforma intenta compilarlas desde el código fuente y la instalación no termina.
 
 ```toml
 HF_TOKEN = "<token del paso 1>"
@@ -56,12 +60,23 @@ UMBRAL_EN = "0.8586"
 ```
 
 Los secretos nunca se escriben en el repositorio. La plataforma los entrega a la aplicación como
-variables de entorno.
+variables de entorno. Si la aplicación se borra y se vuelve a crear, los secretos se pierden y hay que
+cargarlos otra vez.
 
-**4. Desplegar.** La primera vez la plataforma instala las dependencias (varios minutos) y, al abrir
-la página, la aplicación descarga los artefactos del modelo y los precalienta (de 1 a 3 minutos).
-Mientras tanto la barra lateral muestra *Cargando el modelo*. Cuando cambia a *Modelo disponible*, la
-aplicación está lista.
+**4. Desplegar.** La plataforma instala las dependencias y, al abrir la página, la aplicación descarga
+los artefactos del modelo y los precalienta. En el despliegue del 22/10/2026 la instalación tardó
+23 segundos y la carga del modelo, 23 segundos desde la primera visita; el tiempo varía con la carga de
+la plataforma. Mientras tanto la barra lateral muestra *Cargando el modelo*. La barra se actualiza con
+la siguiente acción en la página: cuando muestra *Modelo disponible*, la aplicación está lista.
+
+**Si la carga falla.** Con un token ausente, mal copiado o sin permiso de lectura sobre el repositorio,
+el registro muestra `401 Unauthorized` y la barra lateral indica que el modelo no está disponible.
+Corrija el secreto en *Settings*, *Secrets*, y reinicie la aplicación (*Manage app*, *Reboot app*):
+la aplicación intenta cargar el modelo una sola vez por proceso.
+
+**5. Verificar.** Pruebe los ejemplos de la pestaña *Analizar* y exporte el historial. La verificación
+del 22/10/2026 (16 análisis, ocho entradas distintas, las dos rutas de idioma y un archivo .eml real)
+está en `results/metrics/demo_nube_v1.json`.
 
 ## Operación
 

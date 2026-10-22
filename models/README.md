@@ -19,7 +19,9 @@ Face Hub, versionados con etiquetas inmutables:
 **Acceso para evaluación.** La demostración pública (`nube/README.md`) ya usa el modelo, así que
 para probarlo no hace falta ningún token. Para reproducir el despliegue local, el equipo entrega por un
 canal privado un token de Hugging Face *Fine-grained* de **solo lectura**, limitado a este repositorio
-y revocable. El token nunca se escribe en el código ni en este repositorio.
+y revocable. El token nunca se escribe en el código ni en este repositorio. Cada persona y cada
+despliegue (local o en la nube) recibe su propio token, con un nombre que identifica a quién pertenece,
+para poder revocarlo sin afectar a los demás; al terminar la evaluación del proyecto se revocan todos.
 
 ## Descarga
 

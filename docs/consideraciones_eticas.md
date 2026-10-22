@@ -216,7 +216,8 @@ mientras se investiga.
 **Salvaguardas implementadas**
 
 * Los pesos del modelo están en un repositorio privado; el acceso se entrega con un token de solo
-  lectura y no se publican.
+  lectura, uno por persona y por despliegue, que se revoca al terminar la evaluación. Los pesos no se
+  publican.
 * La API exige una clave, corre en una red interna y publica su puerto solo en `127.0.0.1`. El puntaje
   nunca se devuelve al remitente del correo.
 * La evaluación del proyecto exige una URL pública, así que la interfaz se publica como demostración

@@ -26,6 +26,7 @@ archivo de esta carpeta contiene texto de correos, claves ni indicadores vivos.
 | `optimizacion_resumen.json`, `optimizacion_pruebas_url.csv`, `optimizacion_pruebas_baseline.csv` | Workshop 2 de la Semana 5: configuraciones, importancias, comparación antes y después y cada prueba de Optuna |
 | `evaluacion_final.json` | Prueba con intervalos de confianza, McNemar, áreas, calibración, subgrupos, ruta española, escenarios de estrés y metas SMART |
 | `validacion_externa_mta.json` | Cuatro correos reales de phishing analizados con la interfaz |
+| `demo_nube_v1.json` | Verificación de la demostración pública en Streamlit Community Cloud (22/10/2026) |
 
 **Registros de los experimentos** (`notebooks/experimentos/`)
 
