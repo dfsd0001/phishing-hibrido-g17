@@ -1,0 +1,11 @@
+.git
+.github
+data
+docs
+notebooks
+results
+models/*
+!models/manifiesto.json
+deploy
+app
+**/__pycache__
