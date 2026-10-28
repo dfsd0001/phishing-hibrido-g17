@@ -1,7 +1,10 @@
 {
-  "name": "Python 3",
-  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bookworm",
+  // Entorno de desarrollo para GitHub Codespaces: ejecuta la demostración de nube/ con el modelo
+  // cargado dentro de la interfaz. El modelo se descarga de Hugging Face, por lo que HF_TOKEN debe
+  // definirse como secreto de Codespaces (token de solo lectura, ver models/README.md).
+  // Más información sobre este archivo: https://containers.dev/
+  "name": "Detector híbrido de phishing",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.13-bookworm",
   "customizations": {
     "codespaces": {
       "openFiles": [
@@ -10,20 +13,21 @@
       ]
     },
     "vscode": {
-      "settings": {},
       "extensions": [
         "ms-python.python",
         "ms-python.vscode-pylance"
       ]
     }
   },
-  "updateContentCommand": "[ -f packages.txt ] && sudo apt update && sudo apt upgrade -y && sudo xargs apt install -y <packages.txt; [ -f requirements.txt ] && pip3 install --user -r requirements.txt; pip3 install --user streamlit; echo '✅ Packages installed and Requirements met'",
+  "updateContentCommand": "pip3 install --user -r nube/requirements.txt",
+  // CORS y XSRF se desactivan solo aquí: el reenvío de puertos de Codespaces, privado por defecto,
+  // rechaza la subida de archivos .eml si están activos. No se aplica a ningún otro despliegue.
   "postAttachCommand": {
     "server": "streamlit run nube/streamlit_app.py --server.enableCORS false --server.enableXsrfProtection false"
   },
   "portsAttributes": {
     "8501": {
-      "label": "Application",
+      "label": "Interfaz",
       "onAutoForward": "openPreview"
     }
   },
