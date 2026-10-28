@@ -15,6 +15,8 @@ Especialidades Espíritu Santo (UEES). Grupo 17, octubre de 2026.
 
 **Demostración en línea:** https://phishing-hibrido-g17.streamlit.app
 
+**Demostración en línea (Respaldo):** https://g17-ui.lab.octagonsolutionserver.com
+
 ## Tabla de contenidos
 
 1. [Descripción del problema](#descripción-del-problema)
@@ -230,7 +232,10 @@ Aplicación web en Streamlit que consulta la API. Permite:
 
 ![Interfaz en inglés con tema oscuro](docs/capturas/09_ingles_tema_oscuro.png)
 
-**Demostración en línea: [phishing-hibrido-g17.streamlit.app](https://phishing-hibrido-g17.streamlit.app)**. Es la misma interfaz con el modelo cargado dentro de
+**Demostración en línea: [phishing-hibrido-g17.streamlit.app](https://phishing-hibrido-g17.streamlit.app)**.
+O en el enlace del respaldo por si el principal esta en reposo debido a las limitaciones de la capa gratuita: [https://g17-ui.lab.octagonsolutionserver.com](https://g17-ui.lab.octagonsolutionserver.com)
+
+Es la misma interfaz con el modelo cargado dentro de
 la aplicación, en Streamlit Community Cloud. Úsela con los ejemplos o con correos de prueba: los
 servidores están en Estados Unidos. La primera visita después de un periodo sin uso tarda unos minutos
 mientras se carga el modelo. Cómo se publica y con qué límites: [nube/README.md](nube/README.md).
