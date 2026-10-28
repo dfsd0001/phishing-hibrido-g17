@@ -257,7 +257,8 @@ forma automática.
 Las herramientas del SOC no se publican porque reciben correos reales y guardan casos e indicadores de
 una organización: exponerlas a internet contradice su propósito. La integración se verificó en el
 laboratorio local con un lote de 200 correos: el 100 % de las alertas esperadas llegó a DFIR-IRIS (83
-de 83) y los 200 eventos llegaron a Wazuh. Evidencia, capturas y resultados:
+de 83) y los 200 eventos llegaron a Wazuh. El 28/10/2026 se repitió el recorrido de punta a punta con
+capturas de cada paso, incluido el fallo de la API. Evidencia, capturas y resultados:
 [docs/evidencia_sistema_completo.md](docs/evidencia_sistema_completo.md). Guía para reproducirlo:
 [deploy/README.md](deploy/README.md).
 

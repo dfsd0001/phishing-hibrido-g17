@@ -68,7 +68,58 @@ como legítimos y por eso no generaron alerta; los 25 correos de phishing en esp
 detalle por correo está en `results/metrics/kpi/kpi_resultados.csv`, sin texto de los correos ni
 claves.
 
-### 3.2 Flujo de n8n
+### 3.2 Recorrido de punta a punta (28/10/2026)
+
+Con el laboratorio levantado se enviaron tres correos de prueba al webhook de n8n y se siguió cada uno
+hasta DFIR-IRIS y Wazuh. Las horas de DFIR-IRIS y Wazuh están en UTC; las de la terminal y n8n, en la
+hora local del equipo (UTC-5).
+
+**Servicios.** La API, la interfaz, n8n y Wazuh corren en el compose del proyecto, y DFIR-IRIS en su
+compose oficial. Los puertos de la API, la interfaz y n8n se publican solo en `127.0.0.1`; los de
+Wazuh no se publican en el equipo.
+
+![Servicios del laboratorio](capturas/soc/02_servicios.png)
+
+**Correo de phishing en inglés.** El webhook responde con la clase (phishing, riesgo 98, ruta `en_v3`),
+la alerta creada en DFIR-IRIS (número 175) y el evento enviado a Wazuh. La API tardó 1.991 ms porque
+era la primera solicitud después de arrancarla; la latencia de referencia es la del lote (percentil 95
+de 275 ms).
+
+![Respuesta del webhook](capturas/soc/03_webhook.png)
+
+La ejecución de n8n recorre la API, el mapeo del contrato, la creación de la alerta y el evento a
+Wazuh, todos en verde. La rama de fallo de la API no se usa en este caso.
+
+![Ejecución en n8n](capturas/soc/04_n8n_ejecucion.png)
+
+En DFIR-IRIS la alerta llega con severidad crítica, las etiquetas `g17`, `phishing`, `T1566` y
+`en_v3`, la URL defangeada, la huella SHA-256 del correo y la aclaración de que el puntaje es
+orientativo y la decisión es del analista.
+
+![Lista de alertas en DFIR-IRIS](capturas/soc/05_iris_lista.png)
+
+![Detalle de la alerta](capturas/soc/06_iris_alerta.png)
+
+Wazuh registró el evento dos segundos después con la regla 100502 (nivel 12, phishing de riesgo
+crítico). La segunda parte de la captura es la prueba con `wazuh-logtest`, que muestra la
+decodificación del evento y el mapeo a MITRE ATT&CK (T1566, Initial Access). La palabra CRÍTICO se ve
+mal en la primera salida por la codificación de la consola de Windows; en `wazuh-logtest` se ve bien.
+
+![Regla de Wazuh](capturas/soc/07_wazuh.png)
+
+**Fallo de la API.** Con la API detenida (`docker compose stop api`), el mismo correo genera la alerta
+176: revisión manual obligatoria, severidad media y etiqueta `fallo_api`. El caso no se pierde ni se
+cierra solo.
+
+![Alerta por fallo de la API](capturas/soc/08_fallo_api.png)
+
+**Correo de phishing en español.** Con la API de nuevo arriba, un correo en español se clasifica por la
+ruta `es_v1` (riesgo 99) y genera la alerta 177, con la URL defangeada y las técnicas T1566 y
+T1566.002.
+
+![Alerta de un correo en español](capturas/soc/09_iris_espanol.png)
+
+### 3.3 Diseño del flujo de n8n
 
 ![Flujo de triaje en n8n](capturas/11_flujo_n8n.png)
 
@@ -77,20 +128,14 @@ de `deploy/n8n/codigo/` y las pruebas de `tests/test_flujo_n8n.py` verifican que
 generador, que todas sus conexiones existen, que no contiene claves y que un fallo de la API nunca
 cierra un caso.
 
-### 3.3 Alerta en DFIR-IRIS
+### 3.4 Idioma no soportado (14/10/2026)
 
 ![Alerta de revisión manual en DFIR-IRIS](capturas/soc/01_alerta_iris_revision_manual.png)
 
-Alerta creada por el flujo el 14/10/2026 para un correo en francés. El modelo le asignó riesgo 91,
-pero como el idioma no está soportado, el flujo no la etiqueta como phishing: la envía a revisión
-manual (etiqueta `revision_manual`, severidad media) con la advertencia de que el puntaje no es fiable.
-Es la salvaguarda que se describe en `docs/consideraciones_eticas.md`.
-
-### 3.4 Wazuh
-
-No hay captura de Wazuh. La evidencia es el registro del lote (200 eventos enviados), las reglas
-versionadas y la prueba con `wazuh-logtest` descrita en `deploy/README.md`, sección C, que dispara la
-regla 100502 con `deploy/wazuh/evento_prueba.json`.
+Alerta creada por el flujo para un correo en francés. El modelo le asignó riesgo 91, pero como el
+idioma no está soportado, el flujo no la etiqueta como phishing: la envía a revisión manual (etiqueta
+`revision_manual`, severidad media) con la advertencia de que el puntaje no es fiable. Es la
+salvaguarda que se describe en `docs/consideraciones_eticas.md`.
 
 ### 3.5 Tiempo de triaje
 
