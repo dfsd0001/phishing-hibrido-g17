@@ -23,12 +23,13 @@ Especialidades Espíritu Santo (UEES). Grupo 17, octubre de 2026.
 4. [Resultados](#resultados)
 5. [Instalación y uso](#instalación-y-uso)
 6. [Interfaz de usuario](#interfaz-de-usuario)
-7. [Estructura del proyecto](#estructura-del-proyecto)
-8. [Consideraciones éticas](#consideraciones-éticas)
-9. [Autores y contribuciones](#autores-y-contribuciones)
-10. [Licencia](#licencia)
-11. [Agradecimientos y referencias](#agradecimientos-y-referencias)
-12. [Videos](#videos)
+7. [Alcance del despliegue](#alcance-del-despliegue)
+8. [Estructura del proyecto](#estructura-del-proyecto)
+9. [Consideraciones éticas](#consideraciones-éticas)
+10. [Autores y contribuciones](#autores-y-contribuciones)
+11. [Licencia](#licencia)
+12. [Agradecimientos y referencias](#agradecimientos-y-referencias)
+13. [Videos](#videos)
 
 ## Descripción del problema
 
@@ -240,12 +241,32 @@ local) está en `results/metrics/demo_nube_v1.json`.
 La interfaz también se ejecuta en local (`http://localhost:8501`, ver la sección anterior), conectada a
 la API y al SOC. Guía completa con capturas anotadas: [docs/manual_usuario.md](docs/manual_usuario.md).
 
+## Alcance del despliegue
+
+El sistema completo cubre el ciclo de triaje de un SOC. El correo reportado llega a la API, que lo
+clasifica y devuelve el contrato JSON v1.2. n8n crea una alerta en DFIR-IRIS cuando el correo es
+phishing, cuando su idioma no está soportado o cuando la API falla, y envía el evento a Wazuh, que lo
+procesa con las reglas 100500 a 100503. El analista decide en DFIR-IRIS: ningún caso se cierra de
+forma automática.
+
+| Parte | Dónde corre | Acceso |
+|---|---|---|
+| Modelo e interfaz | Streamlit Community Cloud | Público, para la evaluación (decisión D32) |
+| API, interfaz, n8n, DFIR-IRIS y Wazuh | `docker-compose` local (`deploy/`) | Solo `127.0.0.1` y una red interna sin salida a internet |
+
+Las herramientas del SOC no se publican porque reciben correos reales y guardan casos e indicadores de
+una organización: exponerlas a internet contradice su propósito. La integración se verificó en el
+laboratorio local con un lote de 200 correos: el 100 % de las alertas esperadas llegó a DFIR-IRIS (83
+de 83) y los 200 eventos llegaron a Wazuh. Evidencia, capturas y resultados:
+[docs/evidencia_sistema_completo.md](docs/evidencia_sistema_completo.md). Guía para reproducirlo:
+[deploy/README.md](deploy/README.md).
+
 ## Estructura del proyecto
 
 ```
 phishing-hibrido-g17/
 ├── README.md, LICENSE, requirements.txt, config.yaml, pyproject.toml
-├── docs/            Planificación, análisis de datos, arquitectura, optimización, ética, manual y bitácora
+├── docs/            Planificación, datos, arquitectura, optimización, ética, manual, evidencia del SOC y bitácora
 ├── data/            Manifiestos con huellas SHA-256 y guía para obtener los datos (los correos no se versionan)
 ├── notebooks/       01_exploracion a 05_evaluacion; experimentos/ conserva el registro completo del desarrollo
 ├── src/             Procesamiento, indicadores, variables de URL, modelo, entrenamiento, evaluación y gráficos

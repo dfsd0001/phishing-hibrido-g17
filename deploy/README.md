@@ -3,7 +3,9 @@
 Entorno de demostración del detector integrado con un SOC: API de inferencia, interfaz web, n8n,
 DFIR-IRIS y Wazuh, todos en contenedores en el mismo equipo. Ningún servicio se expone a internet: los
 puertos se publican solo en `127.0.0.1` y la red `soc` es interna. La demostración pública de la
-interfaz, sin la integración con el SOC, se describe en `nube/README.md`.
+interfaz, sin la integración con el SOC, se describe en `nube/README.md`. La evidencia de que este entorno
+funciona (lote de 200 correos, flujo de n8n y alertas en DFIR-IRIS) está en
+`docs/evidencia_sistema_completo.md`.
 
 | Servicio | Versión | Dirección local | Función |
 |---|---|---|---|
