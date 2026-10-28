@@ -32,8 +32,9 @@ HOSTS_PERMITIDOS = re.compile(
         |dl\.acm\.org|ieeexplore\.ieee\.org|docs\.docker\.com|pypi\.org|w3\.org|www\.w3\.org
         |colab\.research\.google\.com|api\.github\.com|codeload\.github\.com|monkey\.org
         |nlp\.stanford\.edu|download\.pytorch\.org|malware-traffic-analysis\.net|render\.com
-        |discuss\.huggingface\.co)
+        |discuss\.huggingface\.co|containers\.dev)
       | (.+\.)?streamlit\.(io|app)
+      | (.+\.)?octagonsolutionserver\.com
     )$""",
     re.VERBOSE,
 )
