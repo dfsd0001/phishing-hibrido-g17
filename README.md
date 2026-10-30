@@ -15,6 +15,8 @@ Especialidades Espíritu Santo (UEES). Grupo 17, octubre de 2026.
 
 **Demostración en línea:** https://phishing-hibrido-g17-myyvrqmmvunvru7bg4yeou.streamlit.app
 
+**Demostración en línea (respaldo):** https://g17-ui.lab.octagonsolutionserver.com
+
 ## Tabla de contenidos
 
 1. [Descripción del problema](#descripción-del-problema)
@@ -359,5 +361,6 @@ Las referencias de cada tema están al final de los documentos de [docs/](docs/)
 
 ## Videos
 
-* **Video pitch (5 minutos):** enlace pendiente de publicación.
-* **Video de respuestas a las preguntas:** enlace pendiente de publicación.
+* **Video pitch (5 minutos):** [Ver video](https://drive.google.com/file/d/1Y7bvTRhlPoAv58kLdQyVlz69JFOOABkk/view?usp=sharing)
+* **Video de respuestas a las preguntas:** [Ver video](https://drive.google.com/file/d/1cVJvBwO4xZVhmeOTguItiTPO0gVUWqHc/view?usp=sharing)
+* **Video DEMO - ANEXO:** [Ver video](https://drive.google.com/file/d/14pLzU85nmiNeFQzuIKh53B1IxccqiYlO/view?usp=sharing)
